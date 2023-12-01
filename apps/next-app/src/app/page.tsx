@@ -1,8 +1,6 @@
 import Image from 'next/image';
 import styles from './page.module.css';
-import { styled } from '@brijeshb42/zero-runtime';
-
-import Button from '../components';
+import { styled } from '@mui/zero-runtime';
 
 const Main = styled.main({
   display: 'flex',
@@ -110,8 +108,6 @@ export default function Home() {
           height={37}
           priority
         />
-        {/* @ts-expect-error sdf */}
-        <Button>Click</Button>
       </div>
 
       <div className={styles.grid}>

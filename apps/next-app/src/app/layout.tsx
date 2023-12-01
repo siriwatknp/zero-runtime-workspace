@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
-import '@brijeshb42/zero-runtime/styles.css';
+import '@mui/zero-runtime/styles.css';
 import InitColorSchemeScript from '@/InitColorSchemeScript';
 
 import './globals.css';

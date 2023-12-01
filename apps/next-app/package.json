@@ -9,7 +9,7 @@
     "clean": "rimraf .next"
   },
   "dependencies": {
-    "@brijeshb42/zero-runtime": "workspace:^",
+    "@mui/zero-runtime": "workspace:^",
     "@mui/base": "^5.0.0-beta.25",
     "@mui/material": "^5.14.19",
     "@mui/material-nextjs": "https://pkg.csb.dev/mui/material-ui/commit/e2a479f3/@mui/material-nextjs",
@@ -22,7 +22,7 @@
     "next": "14.0.1"
   },
   "devDependencies": {
-    "@brijeshb42/zero-next-plugin": "workspace:^",
+    "@mui/zero-next-plugin": "workspace:^",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",

@@ -48,15 +48,12 @@ importers:
 
   apps/local-ui-lib:
     dependencies:
-      '@brijeshb42/zero-runtime':
+      '@mui/zero-runtime':
         specifier: workspace:^
         version: link:../../packages/runtime
 
   apps/next-app:
     dependencies:
-      '@brijeshb42/zero-runtime':
-        specifier: workspace:^
-        version: link:../../packages/runtime
       '@mui/base':
         specifier: ^5.0.0-beta.25
         version: 5.0.0-beta.25(@types/react@18.2.33)(react-dom@18.2.0)(react@18.2.0)
@@ -72,6 +69,9 @@ importers:
       '@mui/utils':
         specifier: ^5.14.19
         version: 5.14.19(@types/react@18.2.33)(react@18.2.0)
+      '@mui/zero-runtime':
+        specifier: workspace:^
+        version: link:../../packages/runtime
       clsx:
         specifier: ^2.0.0
         version: 2.0.0
@@ -88,7 +88,7 @@ importers:
         specifier: ^4.4.5
         version: 4.4.5(react-dom@18.2.0)(react@18.2.0)
     devDependencies:
-      '@brijeshb42/zero-next-plugin':
+      '@mui/zero-next-plugin':
         specifier: workspace:^
         version: link:../../packages/next
       '@types/node':
@@ -112,15 +112,15 @@ importers:
 
   apps/vite-app:
     dependencies:
-      '@brijeshb42/zero-runtime':
-        specifier: workspace:^
-        version: link:../../packages/runtime
       '@mui/base':
         specifier: ^5.0.0-beta.24
         version: 5.0.0-beta.24(@types/react@18.2.33)(react-dom@18.2.0)(react@18.2.0)
       '@mui/system':
         specifier: ^5.14.18
         version: 5.14.18(@emotion/react@11.11.1)(@emotion/styled@11.11.0)(@types/react@18.2.33)(react@18.2.0)
+      '@mui/zero-runtime':
+        specifier: workspace:^
+        version: link:../../packages/runtime
       clsx:
         specifier: ^2.0.0
         version: 2.0.0
@@ -143,15 +143,15 @@ importers:
       '@babel/preset-typescript':
         specifier: ^7.23.2
         version: 7.23.2(@babel/core@7.23.2)
-      '@brijeshb42/zero-vite-plugin':
-        specifier: workspace:^
-        version: link:../../packages/vite
       '@mui/material':
         specifier: ^5.14.18
         version: 5.14.18(@emotion/react@11.11.1)(@emotion/styled@11.11.0)(@types/react@18.2.33)(react-dom@18.2.0)(react@18.2.0)
       '@mui/utils':
         specifier: ^5.14.18
         version: 5.14.18(@types/react@18.2.33)(react@18.2.0)
+      '@mui/zero-vite-plugin':
+        specifier: workspace:^
+        version: link:../../packages/vite
       '@types/react':
         specifier: ^18.2.31
         version: 18.2.33
@@ -167,12 +167,12 @@ importers:
 
   apps/wp-app:
     dependencies:
-      '@brijeshb42/zero-runtime':
-        specifier: workspace:^
-        version: link:../../packages/runtime
       '@mui/material':
         specifier: ^5.14.16
         version: 5.14.16(@types/react@18.2.33)(react-dom@18.2.0)(react@18.2.0)
+      '@mui/zero-runtime':
+        specifier: workspace:^
+        version: link:../../packages/runtime
       local-ui-lib:
         specifier: workspace:^
         version: link:../local-ui-lib
@@ -183,7 +183,7 @@ importers:
         specifier: ^18.2.0
         version: 18.2.0(react@18.2.0)
     devDependencies:
-      '@brijeshb42/zero-unplugin':
+      '@mui/zero-unplugin':
         specifier: workspace:^
         version: link:../../packages/unplugin
       '@types/react':
@@ -216,7 +216,7 @@ importers:
 
   packages/next:
     dependencies:
-      '@brijeshb42/zero-unplugin':
+      '@mui/zero-unplugin':
         specifier: workspace:^
         version: link:../unplugin
     devDependencies:
@@ -321,7 +321,7 @@ importers:
         specifier: ^1.5.1
         version: 1.5.1
     devDependencies:
-      '@brijeshb42/zero-runtime':
+      '@mui/zero-runtime':
         specifier: workspace:^
         version: link:../runtime
       '@types/babel__core':
@@ -336,9 +336,6 @@ importers:
       '@babel/plugin-syntax-typescript':
         specifier: ^7.22.5
         version: 7.22.5(@babel/core@7.23.2)
-      '@brijeshb42/zero-runtime':
-        specifier: workspace:^
-        version: link:../runtime
       '@linaria/babel-preset':
         specifier: ^5.0.4
         version: 5.0.4(typescript@5.3.2)
@@ -348,6 +345,9 @@ importers:
       '@linaria/utils':
         specifier: ^5.0.2
         version: 5.0.2
+      '@mui/zero-runtime':
+        specifier: workspace:^
+        version: link:../runtime
     devDependencies:
       '@types/babel__core':
         specifier: ^7.20.3
