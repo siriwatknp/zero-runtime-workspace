@@ -391,6 +391,9 @@ const ButtonEndIcon = styled('span', {
   ],
 }));
 
+/**
+ * @type React.FC<any>
+ */
 const Button = React.forwardRef(function Button(inProps, ref) {
   // props priority: `inProps` > `contextProps` > `themeDefaultProps`
   const contextProps = React.useContext(ButtonGroupContext);
