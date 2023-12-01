@@ -12,6 +12,7 @@
     "@brijeshb42/zero-runtime": "workspace:^",
     "@mui/base": "^5.0.0-beta.25",
     "@mui/material": "^5.14.19",
+    "@mui/material-nextjs": "https://pkg.csb.dev/mui/material-ui/commit/e2a479f3/@mui/material-nextjs",
     "@mui/system": "^5.14.19",
     "@mui/utils": "^5.14.19",
     "clsx": "^2.0.0",

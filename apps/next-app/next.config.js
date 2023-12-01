@@ -5,7 +5,7 @@ const {
   experimental_extendTheme: extendTheme,
 } = require('@mui/material/styles');
 
-const theme = extendTheme();
+const theme = extendTheme({ cssVarPrefix: 'app' });
 
 /**
  * @typedef {import('@brijeshb42/zero-next-plugin').ZeroPluginConfig} ZeroPluginConfig

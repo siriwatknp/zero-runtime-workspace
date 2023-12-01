@@ -63,6 +63,9 @@ importers:
       '@mui/material':
         specifier: ^5.14.19
         version: 5.14.19(@types/react@18.2.33)(react-dom@18.2.0)(react@18.2.0)
+      '@mui/material-nextjs':
+        specifier: https://pkg.csb.dev/mui/material-ui/commit/e2a479f3/@mui/material-nextjs
+        version: '@pkg.csb.dev/mui/material-ui/commit/e2a479f3/@mui/material-nextjs(@mui/material@5.14.19)(@types/react@18.2.33)(next@14.0.1)(react@18.2.0)'
       '@mui/system':
         specifier: ^5.14.19
         version: 5.14.19(@emotion/react@11.11.1)(@emotion/styled@11.11.0)(@types/react@18.2.33)(react@18.2.0)
@@ -7707,3 +7710,30 @@ packages:
   /yocto-queue@0.1.0:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
     engines: {node: '>=10'}
+
+  '@pkg.csb.dev/mui/material-ui/commit/e2a479f3/@mui/material-nextjs(@mui/material@5.14.19)(@types/react@18.2.33)(next@14.0.1)(react@18.2.0)':
+    resolution: {tarball: https://pkg.csb.dev/mui/material-ui/commit/e2a479f3/@mui/material-nextjs}
+    id: '@pkg.csb.dev/mui/material-ui/commit/e2a479f3/@mui/material-nextjs'
+    name: '@mui/material-nextjs'
+    version: 5.14.18
+    engines: {node: '>=12.0.0'}
+    peerDependencies:
+      '@emotion/cache': ^11.11.0
+      '@emotion/server': ^11.11.0
+      '@mui/material': ^5.0.0
+      '@types/react': ^17.0.0 || ^18.0.0
+      next: ^13.0.0 || ^14.0.0
+      react: ^17.0.0 || ^18.0.0
+    peerDependenciesMeta:
+      '@emotion/cache':
+        optional: true
+      '@emotion/server':
+        optional: true
+      '@types/react':
+        optional: true
+    dependencies:
+      '@mui/material': 5.14.19(@types/react@18.2.33)(react-dom@18.2.0)(react@18.2.0)
+      '@types/react': 18.2.33
+      next: 14.0.1(react-dom@18.2.0)(react@18.2.0)
+      react: 18.2.0
+    dev: false
