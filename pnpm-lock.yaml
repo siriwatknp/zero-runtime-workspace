@@ -70,6 +70,9 @@ importers:
       '@mui/material':
         specifier: ^5.14.16
         version: 5.14.16(@types/react@18.2.33)(react-dom@18.2.0)(react@18.2.0)
+      '@mui/material-nextjs':
+        specifier: https://pkg.csb.dev/mui/material-ui/commit/e2a479f3/@mui/material-nextjs
+        version: '@pkg.csb.dev/mui/material-ui/commit/e2a479f3/@mui/material-nextjs(@mui/material@5.14.16)(@types/react@18.2.33)(next@14.0.1)(react@18.2.0)'
       '@mui/zero-next-plugin':
         specifier: workspace:^
         version: link:../../packages/next
@@ -1515,6 +1518,12 @@ packages:
     dependencies:
       regenerator-runtime: 0.14.0
 
+  /@babel/runtime@7.23.5:
+    resolution: {integrity: sha512-NdUTHcPe4C99WxPub+K9l9tK5/lV4UXIoaHSYgzco9BCyjKAAwzdBI+wWtYqHt7LJdbo74ZjRPJgzVweq1sz0w==}
+    engines: {node: '>=6.9.0'}
+    dependencies:
+      regenerator-runtime: 0.14.0
+
   /@babel/template@7.22.15:
     resolution: {integrity: sha512-QPErUVm4uyJa60rkI73qneDacvdvzxshT3kksGqlGWYdOTIUOwJ7RDUL8sGqslY1uXWSL6xMFKEXDS3ox2uF0w==}
     engines: {node: '>=6.9.0'}
@@ -1607,7 +1616,7 @@ packages:
       '@types/react':
         optional: true
     dependencies:
-      '@babel/runtime': 7.23.2
+      '@babel/runtime': 7.23.5
       '@emotion/babel-plugin': 11.11.0
       '@emotion/cache': 11.11.0
       '@emotion/serialize': 1.1.2
@@ -7571,3 +7580,30 @@ packages:
   /yocto-queue@0.1.0:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
     engines: {node: '>=10'}
+
+  '@pkg.csb.dev/mui/material-ui/commit/e2a479f3/@mui/material-nextjs(@mui/material@5.14.16)(@types/react@18.2.33)(next@14.0.1)(react@18.2.0)':
+    resolution: {tarball: https://pkg.csb.dev/mui/material-ui/commit/e2a479f3/@mui/material-nextjs}
+    id: '@pkg.csb.dev/mui/material-ui/commit/e2a479f3/@mui/material-nextjs'
+    name: '@mui/material-nextjs'
+    version: 5.14.18
+    engines: {node: '>=12.0.0'}
+    peerDependencies:
+      '@emotion/cache': ^11.11.0
+      '@emotion/server': ^11.11.0
+      '@mui/material': ^5.0.0
+      '@types/react': ^17.0.0 || ^18.0.0
+      next: ^13.0.0 || ^14.0.0
+      react: ^17.0.0 || ^18.0.0
+    peerDependenciesMeta:
+      '@emotion/cache':
+        optional: true
+      '@emotion/server':
+        optional: true
+      '@types/react':
+        optional: true
+    dependencies:
+      '@mui/material': 5.14.16(@types/react@18.2.33)(react-dom@18.2.0)(react@18.2.0)
+      '@types/react': 18.2.33
+      next: 14.0.1(react-dom@18.2.0)(react@18.2.0)
+      react: 18.2.0
+    dev: true

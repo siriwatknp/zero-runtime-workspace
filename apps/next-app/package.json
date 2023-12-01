@@ -16,6 +16,7 @@
   },
   "devDependencies": {
     "@mui/material": "^5.14.16",
+    "@mui/material-nextjs": "https://pkg.csb.dev/mui/material-ui/commit/e2a479f3/@mui/material-nextjs",
     "@mui/zero-next-plugin": "workspace:^",
     "@types/node": "^20",
     "@types/react": "^18",
