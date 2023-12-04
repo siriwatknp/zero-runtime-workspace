@@ -10,7 +10,7 @@ import { alpha } from '@mui/system/colorManipulator';
 import useThemeProps from '@mui/material/styles/useThemeProps';
 import ButtonBase from './ButtonBase';
 import capitalize from '@mui/material/utils/capitalize';
-import { getButtonUtilityClass } from './buttonClasses';
+import buttonClasses, { getButtonUtilityClass } from './buttonClasses';
 import ButtonGroupContext from './ButtonGroup/ButtonGroupContext';
 import ButtonGroupButtonContext from './ButtonGroup/ButtonGroupButtonContext';
 
@@ -46,8 +46,7 @@ const useUtilityClasses = (ownerState) => {
 };
 
 const ButtonRoot = styled(ButtonBase, {
-  shouldForwardProp: (prop) =>
-    rootShouldForwardProp(prop) || prop === 'classes',
+  shouldForwardProp: (prop) => rootShouldForwardProp(prop),
   name: 'MuiButton',
   slot: 'Root',
   overridesResolver: (props, styles) => {
@@ -64,238 +63,198 @@ const ButtonRoot = styled(ButtonBase, {
       ownerState.fullWidth && styles.fullWidth,
     ];
   },
-})(
-  ({ theme }) => {
-    return {
-      ...theme.typography.button,
-      minWidth: 64,
-      padding: '6px 16px',
-      borderRadius: (theme.vars || theme).shape.borderRadius,
-      transition: theme.transitions.create(
-        ['background-color', 'box-shadow', 'border-color', 'color'],
-        {
-          duration: theme.transitions.duration.short,
-        },
-      ),
-      '&:hover': {
-        textDecoration: 'none',
-        backgroundColor: theme.vars
-          ? `rgba(${theme.vars.palette.text.primaryChannel} / ${theme.vars.palette.action.hoverOpacity})`
-          : alpha(
-              theme.palette.text.primary,
-              theme.palette.action.hoverOpacity,
-            ),
-        // Reset on touch devices, it doesn't add specificity
-        '@media (hover: none)': {
-          backgroundColor: 'transparent',
+})(({ theme }) => {
+  return {
+    ...theme.typography.button,
+    minWidth: 64,
+    padding: '6px 16px',
+    borderRadius: (theme.vars || theme).shape.borderRadius,
+    transition: theme.transitions.create(
+      ['background-color', 'box-shadow', 'border-color', 'color'],
+      {
+        duration: theme.transitions.duration.short,
+      },
+    ),
+    '&:hover': {
+      textDecoration: 'none',
+      backgroundColor: theme.vars
+        ? `rgba(${theme.vars.palette.text.primaryChannel} / ${theme.vars.palette.action.hoverOpacity})`
+        : alpha(theme.palette.text.primary, theme.palette.action.hoverOpacity),
+      // Reset on touch devices, it doesn't add specificity
+      '@media (hover: none)': {
+        backgroundColor: 'transparent',
+      },
+    },
+    [`&.${buttonClasses.disabled}`]: {
+      color: (theme.vars || theme).palette.action.disabled,
+    },
+    variants: [
+      {
+        props: { variant: 'contained' },
+        style: {
+          color: `var(--variant-containedColor, ${
+            theme.vars
+              ? // this is safe because grey does not change between default light/dark mode
+                theme.vars.palette.text.primary
+              : theme.palette.getContrastText?.(theme.palette.grey[300])
+          })`,
+          backgroundColor: `var(--variant-containedBg, ${
+            theme.vars
+              ? theme.vars.palette.Button.inheritContainedBg
+              : // TODO: fix this
+                ''
+          })`,
+          boxShadow: (theme.vars || theme).shadows[2],
+          '&:hover': {
+            backgroundColor: `var(--variant-containedHoverBg, ${
+              theme.vars
+                ? theme.vars.palette.Button.inheritContainedHoverBg
+                : // TODO: fix this
+                  ''
+            })`,
+            boxShadow: (theme.vars || theme).shadows[4],
+            // Reset on touch devices, it doesn't add specificity
+            '@media (hover: none)': {
+              boxShadow: (theme.vars || theme).shadows[2],
+              backgroundColor: (theme.vars || theme).palette.grey[300],
+            },
+          },
+          '&:active': {
+            boxShadow: (theme.vars || theme).shadows[8],
+          },
+          [`&.${buttonClasses.focusVisible}`]: {
+            boxShadow: (theme.vars || theme).shadows[6],
+          },
+          [`&.${buttonClasses.disabled}`]: {
+            color: (theme.vars || theme).palette.action.disabled,
+            boxShadow: (theme.vars || theme).shadows[0],
+            backgroundColor: (theme.vars || theme).palette.action
+              .disabledBackground,
+          },
         },
       },
-    };
-  },
-  // ({ theme, ownerState }) => {
-  //   const inheritContainedBackgroundColor =
-  //     theme.palette.mode === 'light'
-  //       ? theme.palette.grey[300]
-  //       : theme.palette.grey[800];
-
-  //   const inheritContainedHoverBackgroundColor =
-  //     theme.palette.mode === 'light'
-  //       ? theme.palette.grey.A100
-  //       : theme.palette.grey[700];
-
-  //   return {
-  //     ...theme.typography.button,
-  //     minWidth: 64,
-  //     padding: '6px 16px',
-  //     borderRadius: (theme.vars || theme).shape.borderRadius,
-  //     transition: theme.transitions.create(
-  //       ['background-color', 'box-shadow', 'border-color', 'color'],
-  //       {
-  //         duration: theme.transitions.duration.short,
-  //       },
-  //     ),
-  //     '&:hover': {
-  //       textDecoration: 'none',
-  //       backgroundColor: theme.vars
-  //         ? `rgba(${theme.vars.palette.text.primaryChannel} / ${theme.vars.palette.action.hoverOpacity})`
-  //         : alpha(
-  //             theme.palette.text.primary,
-  //             theme.palette.action.hoverOpacity,
-  //           ),
-  //       // Reset on touch devices, it doesn't add specificity
-  //       '@media (hover: none)': {
-  //         backgroundColor: 'transparent',
-  //       },
-  //       ...(ownerState.variant === 'text' &&
-  //         ownerState.color !== 'inherit' && {
-  //           backgroundColor: theme.vars
-  //             ? `rgba(${theme.vars.palette[ownerState.color].mainChannel} / ${
-  //                 theme.vars.palette.action.hoverOpacity
-  //               })`
-  //             : alpha(
-  //                 theme.palette[ownerState.color].main,
-  //                 theme.palette.action.hoverOpacity,
-  //               ),
-  //           // Reset on touch devices, it doesn't add specificity
-  //           '@media (hover: none)': {
-  //             backgroundColor: 'transparent',
-  //           },
-  //         }),
-  //       ...(ownerState.variant === 'outlined' &&
-  //         ownerState.color !== 'inherit' && {
-  //           border: `1px solid ${
-  //             (theme.vars || theme).palette[ownerState.color].main
-  //           }`,
-  //           backgroundColor: theme.vars
-  //             ? `rgba(${theme.vars.palette[ownerState.color].mainChannel} / ${
-  //                 theme.vars.palette.action.hoverOpacity
-  //               })`
-  //             : alpha(
-  //                 theme.palette[ownerState.color].main,
-  //                 theme.palette.action.hoverOpacity,
-  //               ),
-  //           // Reset on touch devices, it doesn't add specificity
-  //           '@media (hover: none)': {
-  //             backgroundColor: 'transparent',
-  //           },
-  //         }),
-  //       ...(ownerState.variant === 'contained' && {
-  //         backgroundColor: theme.vars
-  //           ? theme.vars.palette.Button.inheritContainedHoverBg
-  //           : inheritContainedHoverBackgroundColor,
-  //         boxShadow: (theme.vars || theme).shadows[4],
-  //         // Reset on touch devices, it doesn't add specificity
-  //         '@media (hover: none)': {
-  //           boxShadow: (theme.vars || theme).shadows[2],
-  //           backgroundColor: (theme.vars || theme).palette.grey[300],
-  //         },
-  //       }),
-  //       ...(ownerState.variant === 'contained' &&
-  //         ownerState.color !== 'inherit' && {
-  //           backgroundColor: (theme.vars || theme).palette[ownerState.color]
-  //             .dark,
-  //           // Reset on touch devices, it doesn't add specificity
-  //           '@media (hover: none)': {
-  //             backgroundColor: (theme.vars || theme).palette[ownerState.color]
-  //               .main,
-  //           },
-  //         }),
-  //     },
-  //     '&:active': {
-  //       ...(ownerState.variant === 'contained' && {
-  //         boxShadow: (theme.vars || theme).shadows[8],
-  //       }),
-  //     },
-  //     [`&.${buttonClasses.focusVisible}`]: {
-  //       ...(ownerState.variant === 'contained' && {
-  //         boxShadow: (theme.vars || theme).shadows[6],
-  //       }),
-  //     },
-  //     [`&.${buttonClasses.disabled}`]: {
-  //       color: (theme.vars || theme).palette.action.disabled,
-  //       ...(ownerState.variant === 'outlined' && {
-  //         border: `1px solid ${
-  //           (theme.vars || theme).palette.action.disabledBackground
-  //         }`,
-  //       }),
-  //       ...(ownerState.variant === 'contained' && {
-  //         color: (theme.vars || theme).palette.action.disabled,
-  //         boxShadow: (theme.vars || theme).shadows[0],
-  //         backgroundColor: (theme.vars || theme).palette.action
-  //           .disabledBackground,
-  //       }),
-  //     },
-  //     ...(ownerState.variant === 'text' && {
-  //       padding: '6px 8px',
-  //     }),
-  //     ...(ownerState.variant === 'text' &&
-  //       ownerState.color !== 'inherit' && {
-  //         color: (theme.vars || theme).palette[ownerState.color].main,
-  //       }),
-  //     ...(ownerState.variant === 'outlined' && {
-  //       padding: '5px 15px',
-  //       border: '1px solid currentColor',
-  //     }),
-  //     ...(ownerState.variant === 'outlined' &&
-  //       ownerState.color !== 'inherit' && {
-  //         color: (theme.vars || theme).palette[ownerState.color].main,
-  //         border: theme.vars
-  //           ? `1px solid rgba(${
-  //               theme.vars.palette[ownerState.color].mainChannel
-  //             } / 0.5)`
-  //           : `1px solid ${alpha(theme.palette[ownerState.color].main, 0.5)}`,
-  //       }),
-  //     ...(ownerState.variant === 'contained' && {
-  //       color: theme.vars
-  //         ? // this is safe because grey does not change between default light/dark mode
-  //           theme.vars.palette.text.primary
-  //         : theme.palette.getContrastText?.(theme.palette.grey[300]),
-  //       backgroundColor: theme.vars
-  //         ? theme.vars.palette.Button.inheritContainedBg
-  //         : inheritContainedBackgroundColor,
-  //       boxShadow: (theme.vars || theme).shadows[2],
-  //     }),
-  //     ...(ownerState.variant === 'contained' &&
-  //       ownerState.color !== 'inherit' && {
-  //         color: (theme.vars || theme).palette[ownerState.color].contrastText,
-  //         backgroundColor: (theme.vars || theme).palette[ownerState.color].main,
-  //       }),
-  //     ...(ownerState.color === 'inherit' && {
-  //       color: 'inherit',
-  //       borderColor: 'currentColor',
-  //     }),
-  //     ...(ownerState.size === 'small' &&
-  //       ownerState.variant === 'text' && {
-  //         padding: '4px 5px',
-  //         fontSize: theme.typography.pxToRem(13),
-  //       }),
-  //     ...(ownerState.size === 'large' &&
-  //       ownerState.variant === 'text' && {
-  //         padding: '8px 11px',
-  //         fontSize: theme.typography.pxToRem(15),
-  //       }),
-  //     ...(ownerState.size === 'small' &&
-  //       ownerState.variant === 'outlined' && {
-  //         padding: '3px 9px',
-  //         fontSize: theme.typography.pxToRem(13),
-  //       }),
-  //     ...(ownerState.size === 'large' &&
-  //       ownerState.variant === 'outlined' && {
-  //         padding: '7px 21px',
-  //         fontSize: theme.typography.pxToRem(15),
-  //       }),
-  //     ...(ownerState.size === 'small' &&
-  //       ownerState.variant === 'contained' && {
-  //         padding: '4px 10px',
-  //         fontSize: theme.typography.pxToRem(13),
-  //       }),
-  //     ...(ownerState.size === 'large' &&
-  //       ownerState.variant === 'contained' && {
-  //         padding: '8px 22px',
-  //         fontSize: theme.typography.pxToRem(15),
-  //       }),
-  //     ...(ownerState.fullWidth && {
-  //       width: '100%',
-  //     }),
-  //   };
-  // },
-  // ({ ownerState }) =>
-  //   ownerState.disableElevation && {
-  //     boxShadow: 'none',
-  //     '&:hover': {
-  //       boxShadow: 'none',
-  //     },
-  //     [`&.${buttonClasses.focusVisible}`]: {
-  //       boxShadow: 'none',
-  //     },
-  //     '&:active': {
-  //       boxShadow: 'none',
-  //     },
-  //     [`&.${buttonClasses.disabled}`]: {
-  //       boxShadow: 'none',
-  //     },
-  //   },
-);
+      {
+        props: { color: 'primary' },
+        style: {
+          '--variant-containedColor': (theme.vars || theme).palette.primary
+            .contrastText,
+          '--variant-containedBg': (theme.vars || theme).palette.primary.main,
+          '@media (hover: hover)': {
+            '--variant-containedHoverBg': (theme.vars || theme).palette.primary
+              .dark,
+          },
+        },
+      },
+      {
+        props: { variant: 'outlined' },
+        style: {
+          padding: '5px 15px',
+          border: '1px solid currentColor',
+          [`&.${buttonClasses.disabled}`]: {
+            border: `1px solid ${
+              (theme.vars || theme).palette.action.disabledBackground
+            }`,
+          },
+        },
+      },
+      {
+        props: { variant: 'text' },
+        style: {
+          padding: '6px 8px',
+        },
+      },
+      {
+        props: {
+          color: 'inherit',
+        },
+        style: {
+          color: 'inherit',
+          borderColor: 'currentColor',
+        },
+      },
+      {
+        props: {
+          size: 'small',
+          variant: 'text',
+        },
+        style: {
+          padding: '4px 5px',
+          fontSize: theme.typography.pxToRem(13),
+        },
+      },
+      {
+        props: {
+          size: 'large',
+          variant: 'text',
+        },
+        style: {
+          padding: '8px 11px',
+          fontSize: theme.typography.pxToRem(15),
+        },
+      },
+      {
+        props: {
+          size: 'small',
+          variant: 'outlined',
+        },
+        style: {
+          padding: '3px 9px',
+          fontSize: theme.typography.pxToRem(13),
+        },
+      },
+      {
+        props: {
+          size: 'large',
+          variant: 'outlined',
+        },
+        style: {
+          padding: '7px 21px',
+          fontSize: theme.typography.pxToRem(15),
+        },
+      },
+      {
+        props: {
+          size: 'small',
+          variant: 'contained',
+        },
+        style: {
+          padding: '4px 10px',
+          fontSize: theme.typography.pxToRem(13),
+        },
+      },
+      {
+        props: {
+          size: 'large',
+          variant: 'contained',
+        },
+        style: {
+          padding: '8px 22px',
+          fontSize: theme.typography.pxToRem(15),
+        },
+      },
+      {
+        props: {
+          disableElevation: true,
+        },
+        style: {
+          boxShadow: 'none',
+          '&:hover': {
+            boxShadow: 'none',
+          },
+          [`&.${buttonClasses.focusVisible}`]: {
+            boxShadow: 'none',
+          },
+          '&:active': {
+            boxShadow: 'none',
+          },
+          [`&.${buttonClasses.disabled}`]: {
+            boxShadow: 'none',
+          },
+        },
+      },
+    ],
+  };
+});
 
 const ButtonStartIcon = styled('span', {
   name: 'MuiButton',

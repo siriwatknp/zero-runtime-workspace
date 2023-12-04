@@ -10,7 +10,9 @@ export default function ZeroPage() {
       }}
     >
       {[...Array(1000)].map((_, i) => (
-        <Button key={i}>Button</Button>
+        <Button variant="contained" key={i}>
+          Button
+        </Button>
       ))}
     </div>
   );
