@@ -15,7 +15,7 @@ export default function ZeroPage() {
         </Button>
       ))}
       {[...Array(100)].map((_, i) => (
-        <Button variant="contained" color="inherit" key={`contained-${i}`}>
+        <Button variant="contained" color="success" key={`contained-${i}`}>
           Button
         </Button>
       ))}

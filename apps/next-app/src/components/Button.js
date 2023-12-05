@@ -15,7 +15,9 @@ import ButtonGroupContext from './ButtonGroup/ButtonGroupContext';
 import ButtonGroupButtonContext from './ButtonGroup/ButtonGroupButtonContext';
 
 export const rootShouldForwardProp = (prop) =>
-  shouldForwardProp(prop) && prop !== 'classes';
+  shouldForwardProp(prop) &&
+  prop !== 'classes' &&
+  prop !== 'focusVisibleClassName';
 
 const useUtilityClasses = (ownerState) => {
   const { color, disableElevation, fullWidth, size, variant, classes } =
@@ -89,13 +91,8 @@ const ButtonRoot = styled(ButtonBase, {
           color: `var(--variant-containedColor)`,
           backgroundColor: `var(--variant-containedBg)`,
           boxShadow: (theme.vars || theme).shadows[2],
-          '&:hover': {
+          '@media (hover: hover)': {
             boxShadow: (theme.vars || theme).shadows[4],
-            // Reset on touch devices, it doesn't add specificity
-            '@media (hover: none)': {
-              boxShadow: (theme.vars || theme).shadows[2],
-              backgroundColor: (theme.vars || theme).palette.grey[300],
-            },
           },
           '&:active': {
             boxShadow: (theme.vars || theme).shadows[8],
@@ -124,23 +121,24 @@ const ButtonRoot = styled(ButtonBase, {
               .contrastText,
             '--variant-containedBg': (theme.vars || theme).palette[item].main,
             '@media (hover: hover)': {
-              '--variant-containedBg': (theme.vars || theme).palette[item].dark,
-            },
-            '&:hover': {
-              '--variant-textBg': theme.vars
-                ? `rgba(${theme.vars.palette[item].mainChannel} / ${theme.vars.palette.action.hoverOpacity})`
-                : alpha(
-                    theme.palette[item].main,
-                    theme.palette.action.hoverOpacity,
-                  ),
-              '--variant-outlinedBorder': (theme.vars || theme).palette[item]
-                .main,
-              '--variant-outlinedBg': theme.vars
-                ? `rgba(${theme.vars.palette[item].mainChannel} / ${theme.vars.palette.action.hoverOpacity})`
-                : alpha(
-                    theme.palette[item].main,
-                    theme.palette.action.hoverOpacity,
-                  ),
+              '&:hover': {
+                '--variant-containedBg': (theme.vars || theme).palette[item]
+                  .dark,
+                '--variant-textBg': theme.vars
+                  ? `rgba(${theme.vars.palette[item].mainChannel} / ${theme.vars.palette.action.hoverOpacity})`
+                  : alpha(
+                      theme.palette[item].main,
+                      theme.palette.action.hoverOpacity,
+                    ),
+                '--variant-outlinedBorder': (theme.vars || theme).palette[item]
+                  .main,
+                '--variant-outlinedBg': theme.vars
+                  ? `rgba(${theme.vars.palette[item].mainChannel} / ${theme.vars.palette.action.hoverOpacity})`
+                  : alpha(
+                      theme.palette[item].main,
+                      theme.palette.action.hoverOpacity,
+                    ),
+              },
             },
           },
         }),
@@ -156,25 +154,25 @@ const ButtonRoot = styled(ButtonBase, {
             : theme.palette.getContrastText?.(theme.palette.grey[300]),
           '--variant-containedBg': theme.vars
             ? theme.vars.palette.Button.inheritContainedBg
-            : // TODO: fix this
-              '',
-          '&:hover': {
-            '--variant-containedBg': theme.vars
-              ? theme.vars.palette.Button.inheritContainedHoverBg
-              : // TODO: fix this
-                '',
-            '--variant-textBg': theme.vars
-              ? `rgba(${theme.vars.palette.text.primaryChannel} / ${theme.vars.palette.action.hoverOpacity})`
-              : alpha(
-                  theme.palette.text.primary,
-                  theme.palette.action.hoverOpacity,
-                ),
-            '--variant-outlinedBg': theme.vars
-              ? `rgba(${theme.vars.palette.text.primaryChannel} / ${theme.vars.palette.action.hoverOpacity})`
-              : alpha(
-                  theme.palette.text.primary,
-                  theme.palette.action.hoverOpacity,
-                ),
+            : theme.palette.grey[300], // TODO: find a better way to support `theme.palette.mode === 'light' ? theme.palette.grey[300] : theme.palette.grey[800];`
+          '@media (hover: hover)': {
+            '&:hover': {
+              '--variant-containedBg': theme.vars
+                ? theme.vars.palette.Button.inheritContainedHoverBg
+                : theme.palette.grey.A100, // TODO: find a better way to support `theme.palette.mode === 'light' ? theme.palette.grey.A100 : theme.palette.grey[700];`
+              '--variant-textBg': theme.vars
+                ? `rgba(${theme.vars.palette.text.primaryChannel} / ${theme.vars.palette.action.hoverOpacity})`
+                : alpha(
+                    theme.palette.text.primary,
+                    theme.palette.action.hoverOpacity,
+                  ),
+              '--variant-outlinedBg': theme.vars
+                ? `rgba(${theme.vars.palette.text.primaryChannel} / ${theme.vars.palette.action.hoverOpacity})`
+                : alpha(
+                    theme.palette.text.primary,
+                    theme.palette.action.hoverOpacity,
+                  ),
+            },
           },
         },
       },
@@ -186,10 +184,6 @@ const ButtonRoot = styled(ButtonBase, {
           borderColor: `var(--variant-outlinedBorder, currentColor)`,
           backgroundColor: `var(--variant-outlinedBg)`,
           color: `var(--variant-outlinedColor)`,
-          // Reset on touch devices, it doesn't add specificity
-          '@media (hover: none)': {
-            backgroundColor: 'transparent',
-          },
           [`&.${buttonClasses.disabled}`]: {
             border: `1px solid ${
               (theme.vars || theme).palette.action.disabledBackground
@@ -203,10 +197,6 @@ const ButtonRoot = styled(ButtonBase, {
           padding: '6px 8px',
           color: `var(--variant-textColor)`,
           backgroundColor: `var(--variant-textBg)`,
-          // Reset on touch devices, it doesn't add specificity
-          '@media (hover: none)': {
-            backgroundColor: 'transparent',
-          },
         },
       },
       {
