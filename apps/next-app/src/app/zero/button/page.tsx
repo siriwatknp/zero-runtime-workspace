@@ -9,8 +9,53 @@ export default function ZeroPage() {
         gap: '1rem',
       }}
     >
-      {[...Array(1000)].map((_, i) => (
-        <Button variant="contained" key={i}>
+      {[...Array(100)].map((_, i) => (
+        <Button variant="text" color="inherit" key={`text-${i}`}>
+          Button
+        </Button>
+      ))}
+      {[...Array(100)].map((_, i) => (
+        <Button variant="contained" color="inherit" key={`contained-${i}`}>
+          Button
+        </Button>
+      ))}
+      {[...Array(100)].map((_, i) => (
+        <Button variant="outlined" color="inherit" key={`outlined-${i}`}>
+          Button
+        </Button>
+      ))}
+      {[...Array(100)].map((_, i) => (
+        <Button variant="text" color="primary" key={`text-${i}`}>
+          Button
+        </Button>
+      ))}
+      {[...Array(100)].map((_, i) => (
+        <Button variant="contained" color="primary" key={`contained-${i}`}>
+          Button
+        </Button>
+      ))}
+      {[...Array(100)].map((_, i) => (
+        <Button variant="outlined" color="primary" key={`outlined-${i}`}>
+          Button
+        </Button>
+      ))}
+      {[...Array(100)].map((_, i) => (
+        <Button variant="text" color="secondary" key={`text-${i}`}>
+          Button
+        </Button>
+      ))}
+      {[...Array(100)].map((_, i) => (
+        <Button variant="contained" color="secondary" key={`contained-${i}`}>
+          Button
+        </Button>
+      ))}
+      {[...Array(100)].map((_, i) => (
+        <Button variant="outlined" color="secondary" key={`outlined-${i}`}>
+          Button
+        </Button>
+      ))}
+      {[...Array(100)].map((_, i) => (
+        <Button variant="outlined" color="error" key={`outlined-${i}`}>
           Button
         </Button>
       ))}
