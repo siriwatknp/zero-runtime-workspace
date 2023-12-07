@@ -1,6 +1,6 @@
-import Grid from '@/components/Unstable_Grid';
+import Grid from '@/emotionless/Unstable_Grid';
 
-export default function ZeroGridPage() {
+export default function EmotionlessGridPage() {
   return (
     <div style={{ padding: '2rem' }}>
       {[...Array(10)].map((_, i) => (

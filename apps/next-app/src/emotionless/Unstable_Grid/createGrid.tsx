@@ -8,7 +8,7 @@ import {
   unstable_composeClasses as composeClasses,
   unstable_generateUtilityClass as generateUtilityClass,
 } from '@mui/utils';
-import { styled } from '@mui/zero-runtime';
+import { styled } from '@mui/material/styles';
 import useTheme from '@mui/system/useTheme';
 import createTheme from '@mui/system/createTheme';
 import {
