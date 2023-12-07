@@ -1,8 +1,9 @@
 /* eslint-disable @typescript-eslint/ban-types */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { GridDirection, GridOwnerState } from './GridProps';
 import { traverseBreakpoints } from './traverseBreakpoints';
 
+type GridDirection = any;
+type GridOwnerState = any;
 type Breakpoints = any;
 type Spacing = any;
 type ResponsiveStyleValue<T> = any & T;

@@ -1,4 +1,7 @@
-import { Breakpoints, Breakpoint } from '../createTheme/createBreakpoints';
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+type Breakpoints = any;
+type Breakpoint = any;
 
 export const filterBreakpointKeys = (
   breakpointsKeys: Breakpoint[],
@@ -40,7 +43,7 @@ export const traverseBreakpoints = <T = unknown>(
         ? breakpoints.keys
         : filterBreakpointKeys(breakpoints.keys, Object.keys(responsive));
 
-    keys.forEach((key) => {
+    keys.forEach((key: string) => {
       if (breakpoints.keys.indexOf(key as Breakpoint) !== -1) {
         // @ts-ignore already checked that responsive is an object
         const breakpointValue: T = responsive[key];

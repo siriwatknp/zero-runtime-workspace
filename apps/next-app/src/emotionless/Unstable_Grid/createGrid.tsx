@@ -17,8 +17,10 @@ import {
   generateDirectionClasses,
 } from './gridGenerator';
 import gridClasses from './gridClasses';
-import { GridTypeMap, GridOwnerState, GridProps } from './GridProps';
 
+type GridTypeMap = any;
+type GridProps = any;
+type GridOwnerState = any;
 type Breakpoint = any;
 
 const defaultTheme = createTheme();
@@ -519,6 +521,7 @@ const Grid = React.forwardRef(function Grid(inProps: any, ref) {
 
   let result = (
     <GridRoot
+      // @ts-ignore
       ref={ref}
       as={component}
       ownerState={ownerState}
