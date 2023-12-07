@@ -7,23 +7,16 @@ import { OverridableComponent } from '@mui/types';
 import {
   unstable_composeClasses as composeClasses,
   unstable_generateUtilityClass as generateUtilityClass,
-  unstable_isMuiElement as isMuiElement,
 } from '@mui/utils';
 import { styled } from '@mui/zero-runtime';
 import useTheme from '@mui/system/useTheme';
 import createTheme from '@mui/system/createTheme';
 import {
-  generateGridStyles,
-  generateGridSizeStyles,
-  generateGridColumnsStyles,
-  generateGridColumnSpacingStyles,
-  generateGridRowSpacingStyles,
-  generateGridDirectionStyles,
-  generateGridOffsetStyles,
   generateSizeClassNames,
   generateSpacingClassNames,
   generateDirectionClasses,
 } from './gridGenerator';
+import gridClasses from './gridClasses';
 import { GridTypeMap, GridOwnerState, GridProps } from './GridProps';
 
 type Breakpoint = any;
@@ -134,14 +127,14 @@ const GridRoot = styled('div')(
     '--_width': ({ ownerState }: any) => {
       if (ownerState.xs === 'auto') return 'auto';
       if (typeof ownerState.xs === 'number')
-        return `calc(100% * var(--_xs) / var(--Grid-columns))`;
+        return `calc(100% * var(--_xs) / var(--_columns))`;
       return undefined;
     },
     [theme.breakpoints.up('sm')]: {
       '--_width-sm': ({ ownerState }: any) => {
         if (ownerState.sm === 'auto') return 'auto';
         if (typeof ownerState.sm === 'number')
-          return `calc(100% * var(--_sm) / var(--Grid-columns))`;
+          return `calc(100% * var(--_sm) / var(--_columns-sm))`;
         return undefined;
       },
     },
@@ -149,7 +142,7 @@ const GridRoot = styled('div')(
       '--_width-md': ({ ownerState }: any) => {
         if (ownerState.md === 'auto') return 'auto';
         if (typeof ownerState.md === 'number')
-          return `calc(100% * var(--_md) / var(--Grid-columns))`;
+          return `calc(100% * var(--_md) / var(--_columns-md))`;
         return undefined;
       },
     },
@@ -157,7 +150,7 @@ const GridRoot = styled('div')(
       '--_width-lg': ({ ownerState }: any) => {
         if (ownerState.lg === 'auto') return 'auto';
         if (typeof ownerState.lg === 'number')
-          return `calc(100% * var(--_lg) / var(--Grid-columns))`;
+          return `calc(100% * var(--_lg) / var(--_columns-lg))`;
         return undefined;
       },
     },
@@ -165,15 +158,256 @@ const GridRoot = styled('div')(
       '--_width-xl': ({ ownerState }: any) => {
         if (ownerState.xl === 'auto') return 'auto';
         if (typeof ownerState.xl === 'number')
-          return `calc(100% * var(--_xl) / var(--Grid-columns))`;
+          return `calc(100% * var(--_xl) / var(--_columns-xl))`;
         return undefined;
       },
+    },
+    [`&.${gridClasses.container}`]: {
+      '--_columns': ({ ownerState }: any) =>
+        ownerState.container ? ownerState.columns.xs ?? 12 : undefined,
+      '--_rowSpacing': ({ ownerState }: any) => {
+        // TODO: support array
+        let rowSpacing = ownerState.rowSpacing;
+        if (
+          ownerState.rowSpacing &&
+          typeof ownerState.rowSpacing === 'object'
+        ) {
+          rowSpacing = ownerState.rowSpacing.xs;
+        }
+        return typeof rowSpacing === 'number'
+          ? `calc(${rowSpacing} * var(--_spacing))`
+          : rowSpacing;
+      },
+      '--_colSpacing': ({ ownerState }: any) => {
+        // TODO: support array
+        let columnSpacing = ownerState.columnSpacing;
+        if (
+          ownerState.columnSpacing &&
+          typeof ownerState.columnSpacing === 'object'
+        ) {
+          columnSpacing = ownerState.columnSpacing.xs;
+        }
+        return typeof columnSpacing === 'number'
+          ? `calc(${columnSpacing} * var(--_spacing))`
+          : columnSpacing;
+      },
+      [theme.breakpoints.up('sm')]: {
+        '--_columns-sm': ({ ownerState }: any) =>
+          ownerState.container ? ownerState.columns.sm : undefined,
+        '--_rowSpacing-sm': ({ ownerState }: any) => {
+          // TODO: support array
+          let rowSpacing = ownerState.rowSpacing;
+          // `xs` already handle the spacing and to reduce the amount of inline style
+          if (typeof rowSpacing === 'number' || typeof rowSpacing === 'string')
+            return undefined;
+          if (
+            ownerState.rowSpacing &&
+            typeof ownerState.rowSpacing === 'object'
+          ) {
+            rowSpacing = ownerState.rowSpacing.sm;
+          }
+          return typeof rowSpacing === 'number'
+            ? `calc(${rowSpacing} * var(--_spacing))`
+            : rowSpacing;
+        },
+        '--_colSpacing-sm': ({ ownerState }: any) => {
+          // TODO: support array
+          let columnSpacing = ownerState.columnSpacing;
+          // `xs` already handle the spacing and to reduce the amount of inline style
+          if (
+            typeof columnSpacing === 'number' ||
+            typeof columnSpacing === 'string'
+          )
+            return undefined;
+          if (
+            ownerState.columnSpacing &&
+            typeof ownerState.columnSpacing === 'object'
+          ) {
+            columnSpacing = ownerState.columnSpacing.sm;
+          }
+          return typeof columnSpacing === 'number'
+            ? `calc(${columnSpacing} * var(--_spacing))`
+            : columnSpacing;
+        },
+      },
+      [theme.breakpoints.up('md')]: {
+        '--_columns-md': ({ ownerState }: any) =>
+          ownerState.container ? ownerState.columns.md : undefined,
+        '--_rowSpacing-md': ({ ownerState }: any) => {
+          // TODO: support array
+          let rowSpacing = ownerState.rowSpacing;
+          // `xs` already handle the spacing and to reduce the amount of inline style
+          if (typeof rowSpacing === 'number' || typeof rowSpacing === 'string')
+            return undefined;
+          if (
+            ownerState.rowSpacing &&
+            typeof ownerState.rowSpacing === 'object'
+          ) {
+            rowSpacing = ownerState.rowSpacing.md;
+          }
+          return typeof rowSpacing === 'number'
+            ? `calc(${rowSpacing} * var(--_spacing))`
+            : rowSpacing;
+        },
+        '--_colSpacing-md': ({ ownerState }: any) => {
+          // TODO: support array
+          let columnSpacing = ownerState.columnSpacing;
+          // `xs` already handle the spacing and to reduce the amount of inline style
+          if (
+            typeof columnSpacing === 'number' ||
+            typeof columnSpacing === 'string'
+          )
+            return undefined;
+          if (
+            ownerState.columnSpacing &&
+            typeof ownerState.columnSpacing === 'object'
+          ) {
+            columnSpacing = ownerState.columnSpacing.md;
+          }
+          return typeof columnSpacing === 'number'
+            ? `calc(${columnSpacing} * var(--_spacing))`
+            : columnSpacing;
+        },
+      },
+      [theme.breakpoints.up('lg')]: {
+        '--_columns-lg': ({ ownerState }: any) =>
+          ownerState.container ? ownerState.columns.lg : undefined,
+        '--_rowSpacing-lg': ({ ownerState }: any) => {
+          // TODO: support array
+          let rowSpacing = ownerState.rowSpacing;
+          // `xs` already handle the spacing and to reduce the amount of inline style
+          if (typeof rowSpacing === 'number' || typeof rowSpacing === 'string')
+            return undefined;
+          if (
+            ownerState.rowSpacing &&
+            typeof ownerState.rowSpacing === 'object'
+          ) {
+            rowSpacing = ownerState.rowSpacing.lg;
+          }
+          return typeof rowSpacing === 'number'
+            ? `calc(${rowSpacing} * var(--_spacing))`
+            : rowSpacing;
+        },
+        '--_colSpacing-lg': ({ ownerState }: any) => {
+          // TODO: support array
+          let columnSpacing = ownerState.columnSpacing;
+          // `xs` already handle the spacing and to reduce the amount of inline style
+          if (
+            typeof columnSpacing === 'number' ||
+            typeof columnSpacing === 'string'
+          )
+            return undefined;
+          if (
+            ownerState.columnSpacing &&
+            typeof ownerState.columnSpacing === 'object'
+          ) {
+            columnSpacing = ownerState.columnSpacing.lg;
+          }
+          return typeof columnSpacing === 'number'
+            ? `calc(${columnSpacing} * var(--_spacing))`
+            : columnSpacing;
+        },
+      },
+      [theme.breakpoints.up('xl')]: {
+        '--_columns-xl': ({ ownerState }: any) =>
+          ownerState.container ? ownerState.columns.xl : undefined,
+        '--_rowSpacing-xl': ({ ownerState }: any) => {
+          // TODO: support array
+          let rowSpacing = ownerState.rowSpacing;
+          // `xs` already handle the spacing and to reduce the amount of inline style
+          if (typeof rowSpacing === 'number' || typeof rowSpacing === 'string')
+            return undefined;
+          if (
+            ownerState.rowSpacing &&
+            typeof ownerState.rowSpacing === 'object'
+          ) {
+            rowSpacing = ownerState.rowSpacing.xl;
+          }
+          return typeof rowSpacing === 'number'
+            ? `calc(${rowSpacing} * var(--_spacing))`
+            : rowSpacing;
+        },
+        '--_colSpacing-xl': ({ ownerState }: any) => {
+          // TODO: support array
+          let columnSpacing = ownerState.columnSpacing;
+          // `xs` already handle the spacing and to reduce the amount of inline style
+          if (
+            typeof columnSpacing === 'number' ||
+            typeof columnSpacing === 'string'
+          )
+            return undefined;
+          if (
+            ownerState.columnSpacing &&
+            typeof ownerState.columnSpacing === 'object'
+          ) {
+            columnSpacing = ownerState.columnSpacing.xl;
+          }
+          return typeof columnSpacing === 'number'
+            ? `calc(${columnSpacing} * var(--_spacing))`
+            : columnSpacing;
+        },
+      },
+    },
+    '&[data-grid-offset]': {
+      marginInlineStart: 'var(--_offset)',
+      '--_offset': ({ ownerState }: any) => {
+        if (ownerState.gridOffset.xs === 'auto') return 'auto';
+        if (typeof ownerState.gridOffset.xs === 'number')
+          return ownerState.gridOffset.xs === 0
+            ? '0px'
+            : `calc(100% * ${ownerState.gridOffset.xs} / var(--_columns))`;
+        return undefined;
+      },
+      [theme.breakpoints.up('sm')]: {
+        '--_offset-sm': ({ ownerState }: any) => {
+          if (ownerState.gridOffset.sm === 'auto') return 'auto';
+          if (typeof ownerState.gridOffset.sm === 'number')
+            return ownerState.gridOffset.sm === 0
+              ? '0px'
+              : `calc(100% * ${ownerState.gridOffset.sm} / var(--_columns-sm))`;
+          return undefined;
+        },
+      },
+      [theme.breakpoints.up('md')]: {
+        '--_offset-md': ({ ownerState }: any) => {
+          if (ownerState.gridOffset.md === 'auto') return 'auto';
+          if (typeof ownerState.gridOffset.md === 'number')
+            return ownerState.gridOffset.md === 0
+              ? '0px'
+              : `calc(100% * ${ownerState.gridOffset.md} / var(--_columns-md))`;
+          return undefined;
+        },
+      },
+      [theme.breakpoints.up('lg')]: {
+        '--_offset-lg': ({ ownerState }: any) => {
+          if (ownerState.gridOffset.lg === 'auto') return 'auto';
+          if (typeof ownerState.gridOffset.lg === 'number')
+            return ownerState.gridOffset.lg === 0
+              ? '0px'
+              : `calc(100% * ${ownerState.gridOffset.lg} / var(--_columns-lg))`;
+          return undefined;
+        },
+      },
+      [theme.breakpoints.up('xl')]: {
+        '--_offset-xl': ({ ownerState }: any) => {
+          if (ownerState.gridOffset.xl === 'auto') return 'auto';
+          if (typeof ownerState.gridOffset.xl === 'number')
+            return ownerState.gridOffset.xl === 0
+              ? '0px'
+              : `calc(100% * ${ownerState.gridOffset.xl} / var(--_columns-xl))`;
+          return undefined;
+        },
+      },
+    },
+    '&[data-grid-item]': {
+      '--_padding': `calc(var(--_rowSpacing-xl, var(--_rowSpacing-lg, var(--_rowSpacing-md, var(--_rowSpacing-sm, var(--_rowSpacing, 0px))))) / 2) calc(var(--_colSpacing-xl, var(--_colSpacing-lg, var(--_colSpacing-md, var(--_colSpacing-sm, var(--_colSpacing, 0px))))) / 2)`,
     },
     '--_xs': ({ ownerState }: any) => ownerState.xs,
     '--_sm': ({ ownerState }: any) => ownerState.sm,
     '--_md': ({ ownerState }: any) => ownerState.md,
     '--_lg': ({ ownerState }: any) => ownerState.lg,
     '--_xl': ({ ownerState }: any) => ownerState.xl,
+    '--_spacing': theme.spacing(1),
     flex: 'var(--_flex-xl, var(--_flex-lg, var(--_flex-md, var(--_flex-sm, var(--_flex)))))',
     width:
       'var(--_width-xl, var(--_width-lg, var(--_width-md, var(--_width-sm, var(--_width)))))',
@@ -181,13 +415,14 @@ const GridRoot = styled('div')(
       'var(--_maxWidth-xl, var(--_maxWidth-lg, var(--_maxWidth-md, var(--_maxWidth-sm, var(--_maxWidth)))))',
     minWidth: 0,
     boxSizing: 'border-box',
+    padding: 'var(--_padding)',
     variants: [
       {
         props: { container: true },
         style: {
           display: 'flex',
           flexWrap: 'wrap',
-          '--Grid-columns': 12,
+          margin: `calc(var(--_rowSpacing-xl, var(--_rowSpacing-lg, var(--_rowSpacing-md, var(--_rowSpacing-sm, var(--_rowSpacing, 0px))))) / -2) calc(var(--_colSpacing-xl, var(--_colSpacing-lg, var(--_colSpacing-md, var(--_colSpacing-sm, var(--_colSpacing, 0px))))) / -2)`,
         },
       },
     ],
@@ -283,11 +518,15 @@ const Grid = React.forwardRef(function Grid(inProps: any, ref) {
       as={component}
       ownerState={ownerState}
       className={clsx(classes.root, className)}
+      data-grid-offset={Object.keys(gridOffset).length ? '' : undefined}
       {...other}
     >
       {React.Children.map(children, (child) => {
-        if (React.isValidElement(child) && isMuiElement(child, ['Grid'])) {
+        if (React.isValidElement(child)) {
           return React.cloneElement(child, {
+            ...(container && {
+              'data-grid-item': '',
+            }),
             // @ts-ignore
             unstable_level: child.props.unstable_level ?? level + 1,
           } as GridProps);
