@@ -8,11 +8,11 @@ import { shouldForwardProp } from '@mui/system/createStyled';
 import { alpha } from '@mui/system/colorManipulator';
 // import { rootShouldForwardProp } from '@mui/material/styles/styled';
 import useThemeProps from '@mui/material/styles/useThemeProps';
-import ButtonBase from './ButtonBase';
+import ButtonBase from '../Button/ButtonBase';
 import capitalize from '@mui/material/utils/capitalize';
-import buttonClasses, { getButtonUtilityClass } from './buttonClasses';
-import ButtonGroupContext from './ButtonGroup/ButtonGroupContext';
-import ButtonGroupButtonContext from './ButtonGroup/ButtonGroupButtonContext';
+import buttonClasses, { getButtonUtilityClass } from '../Button/buttonClasses';
+import ButtonGroupContext from '../ButtonGroup/ButtonGroupContext';
+import ButtonGroupButtonContext from '../ButtonGroup/ButtonGroupButtonContext';
 
 export const rootShouldForwardProp = (prop) =>
   shouldForwardProp(prop) &&
