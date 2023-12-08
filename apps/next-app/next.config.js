@@ -7,6 +7,11 @@ const {
 
 const theme = extendTheme({ cssVarPrefix: 'app' });
 
+const attribute = 'data-mui-color-scheme';
+theme.getColorSchemeSelector = (targetColorScheme) => {
+  return `[${attribute}="${targetColorScheme}"] &`;
+};
+
 /**
  * @typedef {import('@mui/zero-next-plugin').ZeroPluginConfig} ZeroPluginConfig
  */

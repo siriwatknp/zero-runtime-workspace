@@ -107,6 +107,9 @@ export default function styled(tag, options = {}) {
         }
       });
     }
+    if (displayName === 'NotchedOutlineLegend') {
+      console.log(displayName, props);
+    }
 
     const finalClassName = clsx(
       classes,
