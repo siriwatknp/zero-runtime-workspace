@@ -15,7 +15,7 @@ import InputBase, {
   rootOverridesResolver as inputBaseRootOverridesResolver,
   inputOverridesResolver as inputBaseInputOverridesResolver,
   InputBaseRoot,
-  InputBaseComponent as InputBaseInput,
+  InputBaseComponent,
 } from '../InputBase/InputBase';
 
 function shouldForwardProp(prop) {
@@ -52,46 +52,70 @@ const OutlinedInputRoot = styled(InputBaseRoot, {
   name: 'MuiOutlinedInput',
   slot: 'Root',
   overridesResolver: inputBaseRootOverridesResolver,
-})(({ theme, ownerState }) => {
+})(({ theme }) => {
   // const borderColor =
   //   theme.palette.mode === 'light' ? 'rgba(0, 0, 0, 0.23)' : 'rgba(255, 255, 255, 0.23)';
-  // return {
-  //   position: 'relative',
-  //   borderRadius: (theme.vars || theme).shape.borderRadius,
-  //   [`&:hover .${outlinedInputClasses.notchedOutline}`]: {
-  //     borderColor: (theme.vars || theme).palette.text.primary,
-  //   },
-  //   // Reset on touch devices, it doesn't add specificity
-  //   '@media (hover: none)': {
-  //     [`&:hover .${outlinedInputClasses.notchedOutline}`]: {
-  //       borderColor: theme.vars
-  //         ? `rgba(${theme.vars.palette.common.onBackgroundChannel} / 0.23)`
-  //         : borderColor,
-  //     },
-  //   },
-  //   [`&.${outlinedInputClasses.focused} .${outlinedInputClasses.notchedOutline}`]: {
-  //     borderColor: (theme.vars || theme).palette[ownerState.color].main,
-  //     borderWidth: 2,
-  //   },
-  //   [`&.${outlinedInputClasses.error} .${outlinedInputClasses.notchedOutline}`]: {
-  //     borderColor: (theme.vars || theme).palette.error.main,
-  //   },
-  //   [`&.${outlinedInputClasses.disabled} .${outlinedInputClasses.notchedOutline}`]: {
-  //     borderColor: (theme.vars || theme).palette.action.disabled,
-  //   },
-  //   ...(ownerState.startAdornment && {
-  //     paddingLeft: 14,
-  //   }),
-  //   ...(ownerState.endAdornment && {
-  //     paddingRight: 14,
-  //   }),
-  //   ...(ownerState.multiline && {
-  //     padding: '16.5px 14px',
-  //     ...(ownerState.size === 'small' && {
-  //       padding: '8.5px 14px',
-  //     }),
-  //   }),
-  // };
+  return {
+    position: 'relative',
+    borderRadius: (theme.vars || theme).shape.borderRadius,
+    [`&:hover .${outlinedInputClasses.notchedOutline}`]: {
+      borderColor: (theme.vars || theme).palette.text.primary,
+    },
+    // Reset on touch devices, it doesn't add specificity
+    '@media (hover: none)': {
+      [`&:hover .${outlinedInputClasses.notchedOutline}`]: {
+        borderColor: theme.vars
+          ? `rgba(${theme.vars.palette.common.onBackgroundChannel} / 0.23)`
+          : theme.palette.mode === 'light'
+          ? 'rgba(0, 0, 0, 0.23)'
+          : 'rgba(255, 255, 255, 0.23)',
+      },
+    },
+    [`&.${outlinedInputClasses.focused} .${outlinedInputClasses.notchedOutline}`]:
+      {
+        borderWidth: 2,
+      },
+    variants: [
+      ...['primary', 'secondary', 'error', 'info', 'success', 'warning'].map(
+        (item) => ({
+          props: { color: item },
+          style: {
+            [`&.${outlinedInputClasses.focused} .${outlinedInputClasses.notchedOutline}`]:
+              {
+                borderColor: (theme.vars || theme).palette[item].main,
+                borderWidth: 2,
+              },
+          },
+        }),
+      ),
+    ],
+    [`&.${outlinedInputClasses.error} .${outlinedInputClasses.notchedOutline}`]:
+      {
+        borderColor: (theme.vars || theme).palette.error.main,
+      },
+    [`&.${outlinedInputClasses.disabled} .${outlinedInputClasses.notchedOutline}`]:
+      {
+        borderColor: (theme.vars || theme).palette.action.disabled,
+      },
+    padding: ({ ownerState }) => {
+      let paddingLeft = 0;
+      if (ownerState.startAdornment) {
+        paddingLeft = 14;
+      }
+      let paddingRight = 0;
+      if (ownerState.endAdornment) {
+        paddingRight = 14;
+      }
+      let paddingY = 0;
+      if (ownerState.size === 'small') {
+        paddingY = 8.5;
+      }
+      if (ownerState.multiline) {
+        paddingY = 0;
+      }
+      return `${paddingY}px ${paddingRight}px ${paddingY}px ${paddingLeft}px`;
+    },
+  };
 });
 
 const NotchedOutlineRoot = styled(NotchedOutline, {
@@ -110,7 +134,7 @@ const NotchedOutlineRoot = styled(NotchedOutline, {
   };
 });
 
-const OutlinedInputInput = styled(InputBaseInput, {
+const OutlinedInputInput = styled(InputBaseComponent, {
   name: 'MuiOutlinedInput',
   slot: 'Input',
   overridesResolver: inputBaseInputOverridesResolver,
@@ -136,51 +160,28 @@ const OutlinedInputInput = styled(InputBaseInput, {
       },
     },
   }),
-  // paddingBlock: ({ ownerState }) => {
-  //   if (ownerState.multiline) {
-  //     return 0;
-  //   }
-  //   if (ownerState.size === 'small') {
-  //     return '8.5px';
-  //   }
-  //   return 16.5;
-  // },
-  // paddingLeft: ({ ownerState }) => {
-  //   if (ownerState.startAdornment) {
-  //     return 0;
-  //   }
-  //   if (ownerState.multiline) {
-  //     return 0;
-  //   }
-  //   return '14px';
-  // },
-  // paddingRight: ({ ownerState }) => {
-  //   if (ownerState.startAdornment) {
-  //     return 0;
-  //   }
-  //   if (ownerState.multiline) {
-  //     return 0;
-  //   }
-  //   return '14px';
-  // },
   // TODO: The result is weird, need to investigate
   //        --o3vuzx2-0: var(--app-16-16-5px) 14px var(--app-16-16-5px) 14px;
   //        Found it! the value contain `.`, e.g. `16.5px`
   padding: ({ ownerState }) => {
     let paddingY = 16.5;
-    let paddingX = 14;
+    let paddingLeft = 14;
+    let paddingRight = 14;
     if (ownerState.size === 'small') {
       paddingY = 8.5;
     }
     if (ownerState.multiline) {
-      paddingX = 0;
+      paddingLeft = 0;
+      paddingRight = 0;
       paddingY = 0;
     }
-    return `${ownerState ? paddingY : ''}px ${
-      ownerState.endAdornment ? 0 : paddingX
-    }px ${ownerState ? paddingY : ''}px ${
-      ownerState.startAdornment ? 0 : paddingX
-    }px`;
+    if (ownerState.startAdornment) {
+      paddingLeft = 0;
+    }
+    if (ownerState.endAdornment) {
+      paddingRight = 0;
+    }
+    return `${paddingY}px ${paddingRight}px ${paddingY}px ${paddingLeft}px`;
   },
 }));
 

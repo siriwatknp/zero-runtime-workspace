@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { unstable_composeClasses as composeClasses } from '@mui/base/composeClasses';
 import useThemeProps from '@mui/material/styles/useThemeProps';
-import styled from '@mui/zero-runtime';
+import { styled } from '@mui/zero-runtime';
 import { isFilled, isAdornedStart } from '../InputBase/utils';
 import capitalize from '@mui/material/utils/capitalize';
 import isMuiElement from '@mui/material/utils/isMuiElement';
