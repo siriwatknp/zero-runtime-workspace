@@ -1,5 +1,6 @@
-import Stack from '@/components/Stack/Stack';
-import { styled } from '@mui/zero-runtime';
+'use client';
+import Stack from '@mui/material/Stack';
+import { styled } from '@mui/material/styles';
 
 const Box = styled('div')({
   padding: '10px',

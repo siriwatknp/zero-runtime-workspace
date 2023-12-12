@@ -104,7 +104,7 @@ const StackRoot = styled('div')(({ theme }: any) => {
         if (!ownerState.useFlexGap) {
           return undefined;
         }
-        let propValue = getValueByBreakpoint(ownerState.spacing, 'xs');
+        const propValue = getValueByBreakpoint(ownerState.spacing, 'xs');
         if (typeof propValue === 'number' || typeof propValue === 'string') {
           return getSpacingValue(propValue, theme);
         }
@@ -119,7 +119,7 @@ const StackRoot = styled('div')(({ theme }: any) => {
         if (!ownerState.useFlexGap) {
           return undefined;
         }
-        let propValue = getValueByBreakpoint(ownerState.spacing, 'sm');
+        const propValue = getValueByBreakpoint(ownerState.spacing, 'sm');
 
         if (typeof propValue === 'number' || typeof propValue === 'string') {
           return getSpacingValue(propValue, theme);
@@ -135,7 +135,7 @@ const StackRoot = styled('div')(({ theme }: any) => {
         if (!ownerState.useFlexGap) {
           return undefined;
         }
-        let propValue = getValueByBreakpoint(ownerState.spacing, 'md');
+        const propValue = getValueByBreakpoint(ownerState.spacing, 'md');
 
         if (typeof propValue === 'number' || typeof propValue === 'string') {
           return getSpacingValue(propValue, theme);
@@ -151,7 +151,7 @@ const StackRoot = styled('div')(({ theme }: any) => {
         if (!ownerState.useFlexGap) {
           return undefined;
         }
-        let propValue = getValueByBreakpoint(ownerState.spacing, 'lg');
+        const propValue = getValueByBreakpoint(ownerState.spacing, 'lg');
 
         if (typeof propValue === 'number' || typeof propValue === 'string') {
           return getSpacingValue(propValue, theme);
@@ -167,7 +167,7 @@ const StackRoot = styled('div')(({ theme }: any) => {
         if (!ownerState.useFlexGap) {
           return undefined;
         }
-        let propValue = getValueByBreakpoint(ownerState.spacing, 'xl');
+        const propValue = getValueByBreakpoint(ownerState.spacing, 'xl');
 
         if (typeof propValue === 'number' || typeof propValue === 'string') {
           return getSpacingValue(propValue, theme);
@@ -236,8 +236,8 @@ const StackRoot = styled('div')(({ theme }: any) => {
 
           [theme.breakpoints.up('xs')]: {
             '--_child-margin-left-xs': ({ ownerState }: any) => {
-              let propValue = getValueByBreakpoint(ownerState.spacing, 'xs');
-              let directionValue = getValueByBreakpoint(
+              const propValue = getValueByBreakpoint(ownerState.spacing, 'xs');
+              const directionValue = getValueByBreakpoint(
                 ownerState.direction,
                 'xs',
                 true,
@@ -258,8 +258,8 @@ const StackRoot = styled('div')(({ theme }: any) => {
               return undefined;
             },
             '--_child-margin-right-xs': ({ ownerState }: any) => {
-              let propValue = getValueByBreakpoint(ownerState.spacing, 'xs');
-              let directionValue = getValueByBreakpoint(
+              const propValue = getValueByBreakpoint(ownerState.spacing, 'xs');
+              const directionValue = getValueByBreakpoint(
                 ownerState.direction,
                 'xs',
                 true,
@@ -280,8 +280,8 @@ const StackRoot = styled('div')(({ theme }: any) => {
               return undefined;
             },
             '--_child-margin-top-xs': ({ ownerState }: any) => {
-              let propValue = getValueByBreakpoint(ownerState.spacing, 'xs');
-              let directionValue = getValueByBreakpoint(
+              const propValue = getValueByBreakpoint(ownerState.spacing, 'xs');
+              const directionValue = getValueByBreakpoint(
                 ownerState.direction,
                 'xs',
                 true,
@@ -302,8 +302,8 @@ const StackRoot = styled('div')(({ theme }: any) => {
               return undefined;
             },
             '--_child-margin-bottom-xs': ({ ownerState }: any) => {
-              let propValue = getValueByBreakpoint(ownerState.spacing, 'xs');
-              let directionValue = getValueByBreakpoint(
+              const propValue = getValueByBreakpoint(ownerState.spacing, 'xs');
+              const directionValue = getValueByBreakpoint(
                 ownerState.direction,
                 'xs',
                 true,
@@ -326,8 +326,8 @@ const StackRoot = styled('div')(({ theme }: any) => {
           },
           [theme.breakpoints.up('sm')]: {
             '--_child-margin-left-sm': ({ ownerState }: any) => {
-              let propValue = getValueByBreakpoint(ownerState.spacing, 'sm');
-              let directionValue = getValueByBreakpoint(
+              const propValue = getValueByBreakpoint(ownerState.spacing, 'sm');
+              const directionValue = getValueByBreakpoint(
                 ownerState.direction,
                 'sm',
                 true,
@@ -348,8 +348,8 @@ const StackRoot = styled('div')(({ theme }: any) => {
               return undefined;
             },
             '--_child-margin-right-sm': ({ ownerState }: any) => {
-              let propValue = getValueByBreakpoint(ownerState.spacing, 'sm');
-              let directionValue = getValueByBreakpoint(
+              const propValue = getValueByBreakpoint(ownerState.spacing, 'sm');
+              const directionValue = getValueByBreakpoint(
                 ownerState.direction,
                 'sm',
                 true,
@@ -370,8 +370,8 @@ const StackRoot = styled('div')(({ theme }: any) => {
               return undefined;
             },
             '--_child-margin-top-sm': ({ ownerState }: any) => {
-              let propValue = getValueByBreakpoint(ownerState.spacing, 'sm');
-              let directionValue = getValueByBreakpoint(
+              const propValue = getValueByBreakpoint(ownerState.spacing, 'sm');
+              const directionValue = getValueByBreakpoint(
                 ownerState.direction,
                 'sm',
                 true,
@@ -392,8 +392,8 @@ const StackRoot = styled('div')(({ theme }: any) => {
               return undefined;
             },
             '--_child-margin-bottom-sm': ({ ownerState }: any) => {
-              let propValue = getValueByBreakpoint(ownerState.spacing, 'sm');
-              let directionValue = getValueByBreakpoint(
+              const propValue = getValueByBreakpoint(ownerState.spacing, 'sm');
+              const directionValue = getValueByBreakpoint(
                 ownerState.direction,
                 'sm',
                 true,
@@ -416,8 +416,8 @@ const StackRoot = styled('div')(({ theme }: any) => {
           },
           [theme.breakpoints.up('md')]: {
             '--_child-margin-left-md': ({ ownerState }: any) => {
-              let propValue = getValueByBreakpoint(ownerState.spacing, 'md');
-              let directionValue = getValueByBreakpoint(
+              const propValue = getValueByBreakpoint(ownerState.spacing, 'md');
+              const directionValue = getValueByBreakpoint(
                 ownerState.direction,
                 'md',
                 true,
@@ -437,8 +437,8 @@ const StackRoot = styled('div')(({ theme }: any) => {
               return undefined;
             },
             '--_child-margin-right-md': ({ ownerState }: any) => {
-              let propValue = getValueByBreakpoint(ownerState.spacing, 'md');
-              let directionValue = getValueByBreakpoint(
+              const propValue = getValueByBreakpoint(ownerState.spacing, 'md');
+              const directionValue = getValueByBreakpoint(
                 ownerState.direction,
                 'md',
                 true,
@@ -459,8 +459,8 @@ const StackRoot = styled('div')(({ theme }: any) => {
               return undefined;
             },
             '--_child-margin-top-md': ({ ownerState }: any) => {
-              let propValue = getValueByBreakpoint(ownerState.spacing, 'md');
-              let directionValue = getValueByBreakpoint(
+              const propValue = getValueByBreakpoint(ownerState.spacing, 'md');
+              const directionValue = getValueByBreakpoint(
                 ownerState.direction,
                 'md',
                 true,
@@ -481,8 +481,8 @@ const StackRoot = styled('div')(({ theme }: any) => {
               return undefined;
             },
             '--_child-margin-bottom-md': ({ ownerState }: any) => {
-              let propValue = getValueByBreakpoint(ownerState.spacing, 'md');
-              let directionValue = getValueByBreakpoint(
+              const propValue = getValueByBreakpoint(ownerState.spacing, 'md');
+              const directionValue = getValueByBreakpoint(
                 ownerState.direction,
                 'md',
                 true,
@@ -505,8 +505,8 @@ const StackRoot = styled('div')(({ theme }: any) => {
           },
           [theme.breakpoints.up('lg')]: {
             '--_child-margin-left-lg': ({ ownerState }: any) => {
-              let propValue = getValueByBreakpoint(ownerState.spacing, 'lg');
-              let directionValue = getValueByBreakpoint(
+              const propValue = getValueByBreakpoint(ownerState.spacing, 'lg');
+              const directionValue = getValueByBreakpoint(
                 ownerState.direction,
                 'lg',
                 true,
@@ -526,8 +526,8 @@ const StackRoot = styled('div')(({ theme }: any) => {
               return undefined;
             },
             '--_child-margin-right-lg': ({ ownerState }: any) => {
-              let propValue = getValueByBreakpoint(ownerState.spacing, 'lg');
-              let directionValue = getValueByBreakpoint(
+              const propValue = getValueByBreakpoint(ownerState.spacing, 'lg');
+              const directionValue = getValueByBreakpoint(
                 ownerState.direction,
                 'lg',
                 true,
@@ -548,8 +548,8 @@ const StackRoot = styled('div')(({ theme }: any) => {
               return undefined;
             },
             '--_child-margin-top-lg': ({ ownerState }: any) => {
-              let propValue = getValueByBreakpoint(ownerState.spacing, 'lg');
-              let directionValue = getValueByBreakpoint(
+              const propValue = getValueByBreakpoint(ownerState.spacing, 'lg');
+              const directionValue = getValueByBreakpoint(
                 ownerState.direction,
                 'lg',
                 true,
@@ -570,8 +570,8 @@ const StackRoot = styled('div')(({ theme }: any) => {
               return undefined;
             },
             '--_child-margin-bottom-lg': ({ ownerState }: any) => {
-              let propValue = getValueByBreakpoint(ownerState.spacing, 'lg');
-              let directionValue = getValueByBreakpoint(
+              const propValue = getValueByBreakpoint(ownerState.spacing, 'lg');
+              const directionValue = getValueByBreakpoint(
                 ownerState.direction,
                 'lg',
                 true,
@@ -594,8 +594,8 @@ const StackRoot = styled('div')(({ theme }: any) => {
           },
           [theme.breakpoints.up('xl')]: {
             '--_child-margin-left-xl': ({ ownerState }: any) => {
-              let propValue = getValueByBreakpoint(ownerState.spacing, 'xl');
-              let directionValue = getValueByBreakpoint(
+              const propValue = getValueByBreakpoint(ownerState.spacing, 'xl');
+              const directionValue = getValueByBreakpoint(
                 ownerState.direction,
                 'xl',
                 true,
@@ -615,8 +615,8 @@ const StackRoot = styled('div')(({ theme }: any) => {
               return undefined;
             },
             '--_child-margin-right-xl': ({ ownerState }: any) => {
-              let propValue = getValueByBreakpoint(ownerState.spacing, 'xl');
-              let directionValue = getValueByBreakpoint(
+              const propValue = getValueByBreakpoint(ownerState.spacing, 'xl');
+              const directionValue = getValueByBreakpoint(
                 ownerState.direction,
                 'xl',
                 true,
@@ -637,8 +637,8 @@ const StackRoot = styled('div')(({ theme }: any) => {
               return undefined;
             },
             '--_child-margin-top-xl': ({ ownerState }: any) => {
-              let propValue = getValueByBreakpoint(ownerState.spacing, 'xl');
-              let directionValue = getValueByBreakpoint(
+              const propValue = getValueByBreakpoint(ownerState.spacing, 'xl');
+              const directionValue = getValueByBreakpoint(
                 ownerState.direction,
                 'xl',
                 true,
@@ -659,8 +659,8 @@ const StackRoot = styled('div')(({ theme }: any) => {
               return undefined;
             },
             '--_child-margin-bottom-xl': ({ ownerState }: any) => {
-              let propValue = getValueByBreakpoint(ownerState.spacing, 'xl');
-              let directionValue = getValueByBreakpoint(
+              const propValue = getValueByBreakpoint(ownerState.spacing, 'xl');
+              const directionValue = getValueByBreakpoint(
                 ownerState.direction,
                 'xl',
                 true,
@@ -721,7 +721,6 @@ const Stack = React.forwardRef(function Stack(inProps: any, ref) {
   };
   const classes = useUtilityClasses();
   return (
-    // @ts-ignore
     <StackRoot
       as={component}
       ownerState={ownerState}
