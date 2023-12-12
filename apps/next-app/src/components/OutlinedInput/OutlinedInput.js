@@ -17,6 +17,7 @@ import InputBase, {
   InputBaseRoot,
   InputBaseComponent,
 } from '../InputBase/InputBase';
+import inputBaseClasses from '../InputBase/inputBaseClasses';
 
 function shouldForwardProp(prop) {
   return (
@@ -56,8 +57,28 @@ const OutlinedInputRoot = styled(InputBaseRoot, {
   // const borderColor =
   //   theme.palette.mode === 'light' ? 'rgba(0, 0, 0, 0.23)' : 'rgba(255, 255, 255, 0.23)';
   return {
-    position: 'relative',
-    borderRadius: (theme.vars || theme).shape.borderRadius,
+    [`&.${outlinedInputClasses.root}`]: {
+      position: 'relative',
+      borderRadius: (theme.vars || theme).shape.borderRadius,
+      padding: ({ ownerState }) => {
+        let paddingLeft = 0;
+        if (ownerState.startAdornment) {
+          paddingLeft = 14;
+        }
+        let paddingRight = 0;
+        if (ownerState.endAdornment) {
+          paddingRight = 14;
+        }
+        let paddingY = 0;
+        if (ownerState.size === 'small') {
+          paddingY = 8.5;
+        }
+        if (ownerState.multiline) {
+          paddingY = 0;
+        }
+        return `${paddingY}px ${paddingRight}px ${paddingY}px ${paddingLeft}px`;
+      },
+    },
     [`&:hover .${outlinedInputClasses.notchedOutline}`]: {
       borderColor: (theme.vars || theme).palette.text.primary,
     },
@@ -97,24 +118,6 @@ const OutlinedInputRoot = styled(InputBaseRoot, {
       {
         borderColor: (theme.vars || theme).palette.action.disabled,
       },
-    padding: ({ ownerState }) => {
-      let paddingLeft = 0;
-      if (ownerState.startAdornment) {
-        paddingLeft = 14;
-      }
-      let paddingRight = 0;
-      if (ownerState.endAdornment) {
-        paddingRight = 14;
-      }
-      let paddingY = 0;
-      if (ownerState.size === 'small') {
-        paddingY = 8.5;
-      }
-      if (ownerState.multiline) {
-        paddingY = 0;
-      }
-      return `${paddingY}px ${paddingRight}px ${paddingY}px ${paddingLeft}px`;
-    },
   };
 });
 
@@ -138,52 +141,154 @@ const OutlinedInputInput = styled(InputBaseComponent, {
   name: 'MuiOutlinedInput',
   slot: 'Input',
   overridesResolver: inputBaseInputOverridesResolver,
-})(({ theme }) => ({
-  ...(!theme.vars && {
-    '&:-webkit-autofill': {
-      WebkitBoxShadow:
-        theme.palette.mode === 'light' ? null : '0 0 0 100px #266798 inset',
-      WebkitTextFillColor: theme.palette.mode === 'light' ? null : '#fff',
-      caretColor: theme.palette.mode === 'light' ? null : '#fff',
-      borderRadius: 'inherit',
-    },
-  }),
-  ...(theme.vars && {
-    '&:-webkit-autofill': {
-      borderRadius: 'inherit',
-    },
-    [theme.getColorSchemeSelector('dark')]: {
+})(({ theme }) => {
+  // TODO: fix cannot read property 'mode' of undefined
+  // const light = theme.palette.mode === 'light';
+  const placeholder = {
+    color: 'currentColor',
+    ...(theme.vars
+      ? {
+          opacity: theme.vars.opacity.inputPlaceholder,
+        }
+      : {
+          // opacity: light ? 0.42 : 0.5,
+          opacity: 0.42,
+        }),
+    transition: theme.transitions.create('opacity', {
+      duration: theme.transitions.duration.shorter,
+    }),
+  };
+  const placeholderHidden = {
+    // TODO: `!important` causes compilation error
+    // opacity: '0 !important',
+    opacity: 0,
+  };
+  const placeholderVisible = theme.vars
+    ? {
+        opacity: theme.vars.opacity.inputPlaceholder,
+      }
+    : {
+        // opacity: light ? 0.42 : 0.5,
+        opacity: 0.42,
+      };
+  return {
+    ...(!theme.vars && {
       '&:-webkit-autofill': {
-        WebkitBoxShadow: '0 0 0 100px #266798 inset',
-        WebkitTextFillColor: '#fff',
-        caretColor: '#fff',
+        WebkitBoxShadow:
+          theme.palette.mode === 'light' ? null : '0 0 0 100px #266798 inset',
+        WebkitTextFillColor: theme.palette.mode === 'light' ? null : '#fff',
+        caretColor: theme.palette.mode === 'light' ? null : '#fff',
+        borderRadius: 'inherit',
       },
+    }),
+    ...(theme.vars && {
+      '&:-webkit-autofill': {
+        borderRadius: 'inherit',
+      },
+      [theme.getColorSchemeSelector('dark')]: {
+        '&:-webkit-autofill': {
+          WebkitBoxShadow: '0 0 0 100px #266798 inset',
+          WebkitTextFillColor: '#fff',
+          caretColor: '#fff',
+        },
+      },
+    }),
+    font: 'inherit',
+    letterSpacing: 'inherit',
+    color: 'currentColor',
+    padding: '4px 0 5px',
+    border: 0,
+    boxSizing: 'content-box',
+    background: 'none',
+    height: '1.4375em',
+    margin: 0,
+    WebkitTapHighlightColor: 'transparent',
+    display: 'block',
+    // Make the flex item shrink with Firefox
+    minWidth: 0,
+    width: '100%',
+    animationName: 'mui-auto-fill-cancel',
+    animationDuration: '10ms',
+    '&::-webkit-input-placeholder': placeholder,
+    '&::-moz-placeholder': placeholder,
+    '&:-ms-input-placeholder': placeholder,
+    '&::-ms-input-placeholder': placeholder,
+    '&:focus': {
+      outline: 0,
     },
-  }),
-  // TODO: The result is weird, need to investigate
-  //        --o3vuzx2-0: var(--app-16-16-5px) 14px var(--app-16-16-5px) 14px;
-  //        Found it! the value contain `.`, e.g. `16.5px`
-  padding: ({ ownerState }) => {
-    let paddingY = 16.5;
-    let paddingLeft = 14;
-    let paddingRight = 14;
-    if (ownerState.size === 'small') {
-      paddingY = 8.5;
-    }
-    if (ownerState.multiline) {
-      paddingLeft = 0;
-      paddingRight = 0;
-      paddingY = 0;
-    }
-    if (ownerState.startAdornment) {
-      paddingLeft = 0;
-    }
-    if (ownerState.endAdornment) {
-      paddingRight = 0;
-    }
-    return `${paddingY}px ${paddingRight}px ${paddingY}px ${paddingLeft}px`;
-  },
-}));
+    // Reset Firefox invalid required input style
+    '&:invalid': {
+      boxShadow: 'none',
+    },
+    '&::-webkit-search-decoration': {
+      // Remove the padding when type=search.
+      WebkitAppearance: 'none',
+    },
+    // Show and hide the placeholder logic
+    [`label[data-shrink=false] + .${inputBaseClasses.formControl} &`]: {
+      '&::-webkit-input-placeholder': placeholderHidden,
+      '&::-moz-placeholder': placeholderHidden,
+      '&:-ms-input-placeholder': placeholderHidden,
+      '&::-ms-input-placeholder': placeholderHidden,
+      '&:focus::-webkit-input-placeholder': placeholderVisible,
+      '&:focus::-moz-placeholder': placeholderVisible,
+      '&:focus:-ms-input-placeholder': placeholderVisible,
+      '&:focus::-ms-input-placeholder': placeholderVisible, // Edge
+    },
+    [`&.${inputBaseClasses.disabled}`]: {
+      opacity: 1,
+      WebkitTextFillColor: (theme.vars || theme).palette.text.disabled, // Fix opacity Safari bug
+    },
+    '&:-webkit-autofill': {
+      animationDuration: '5000s',
+      animationName: 'mui-auto-fill',
+    },
+    variants: [
+      {
+        props: { multiline: true },
+        style: {
+          height: 'auto',
+          resize: 'none',
+          padding: 0,
+          paddingTop: 0,
+        },
+      },
+      {
+        props: { size: 'small' },
+        style: {
+          paddingTop: 1,
+        },
+      },
+    ],
+    '&[type="search"]': {
+      // Improve type search style.
+      MozAppearance: 'textfield',
+    },
+    // TODO: The result is weird, need to investigate
+    //        --o3vuzx2-0: var(--app-16-16-5px) 14px var(--app-16-16-5px) 14px;
+    //        Found it! the value contain `.`, e.g. `16.5px`
+    padding: ({ ownerState }) => {
+      let paddingY = 16.5;
+      let paddingLeft = 14;
+      let paddingRight = 14;
+      if (ownerState.size === 'small') {
+        paddingY = 8.5;
+      }
+      if (ownerState.multiline) {
+        paddingLeft = 0;
+        paddingRight = 0;
+        paddingY = 0;
+      }
+      if (ownerState.startAdornment) {
+        paddingLeft = 0;
+      }
+      if (ownerState.endAdornment) {
+        paddingRight = 0;
+      }
+      return `${paddingY}px ${paddingRight}px ${paddingY}px ${paddingLeft}px`;
+    },
+  };
+});
 
 const OutlinedInput = React.forwardRef(function OutlinedInput(inProps, ref) {
   const props = useThemeProps({ props: inProps, name: 'MuiOutlinedInput' });

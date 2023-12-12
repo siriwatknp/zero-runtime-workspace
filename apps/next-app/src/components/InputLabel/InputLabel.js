@@ -9,7 +9,9 @@ import FormLabel, { formLabelClasses } from '../FormLabel';
 import useThemeProps from '@mui/material/styles/useThemeProps';
 import capitalize from '@mui/material/utils/capitalize';
 import { styled } from '@mui/zero-runtime';
-import { getInputLabelUtilityClasses } from './inputLabelClasses';
+import inputLabelClasses, {
+  getInputLabelUtilityClasses,
+} from './inputLabelClasses';
 
 function shouldForwardProp(prop) {
   return (
@@ -71,19 +73,23 @@ const InputLabelRoot = styled(FormLabel, {
     ];
   },
 })(({ theme }) => ({
-  display: 'block',
-  transformOrigin: 'top left',
-  whiteSpace: 'nowrap',
-  overflow: 'hidden',
-  textOverflow: 'ellipsis',
-  maxWidth: '100%',
+  [`&.${inputLabelClasses.root}`]: {
+    display: 'block',
+    transformOrigin: 'top left',
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    maxWidth: '100%',
+  },
   variants: [
     {
       props: (ownerState) => ownerState.formControl,
       style: {
-        position: 'absolute',
-        left: 0,
-        top: 0,
+        [`&.${inputLabelClasses.root}`]: {
+          position: 'absolute',
+          left: 0,
+          top: 0,
+        },
         // slight alteration to spec spacing to match visual spec result
         transform: 'translate(0, 20px) scale(1)',
       },

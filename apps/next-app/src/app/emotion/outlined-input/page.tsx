@@ -1,6 +1,6 @@
-import OutlinedInput from '@/components/OutlinedInput';
-import FormControl from '@/components/FormControl';
-import InputLabel from '@/components/InputLabel';
+import OutlinedInput from '@mui/material/OutlinedInput';
+import FormControl from '@mui/material/FormControl';
+import InputLabel from '@mui/material/InputLabel';
 
 export default function ZeroOutlinedInputPage() {
   return (
