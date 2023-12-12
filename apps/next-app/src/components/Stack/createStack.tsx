@@ -56,6 +56,26 @@ function joinChildren(
   }, []);
 }
 
+const isPrimitiveValue = (value: any) => {
+  return typeof value === 'string' || typeof value === 'number';
+};
+
+const breakpoints = ['xs', 'sm', 'md', 'lg', 'xl'];
+
+const getValueByBreakpoint = (
+  value: any,
+  breakpoint: string,
+  considerPlainValue = false,
+) => {
+  if (Array.isArray(value)) {
+    return value[breakpoints.indexOf(breakpoint)];
+  }
+  if (typeof value === 'object') {
+    return value[breakpoint];
+  }
+  return considerPlainValue ? value : undefined;
+};
+
 const StackRoot = styled('div')(({ theme }: any) => {
   return {
     display: 'flex',
@@ -66,6 +86,9 @@ const StackRoot = styled('div')(({ theme }: any) => {
       return undefined;
     },
     '--_flex-gap': ({ ownerState }: any) => {
+      if (!ownerState.useFlexGap) {
+        return undefined;
+      }
       const propValue = ownerState.spacing;
       if (typeof propValue === 'number' || typeof propValue === 'string') {
         return getSpacingValue(propValue, theme);
@@ -75,20 +98,13 @@ const StackRoot = styled('div')(({ theme }: any) => {
 
     [theme.breakpoints.up('xs')]: {
       '--_flex-direction-xs': ({ ownerState }: any) => {
-        if (Array.isArray(ownerState.direction)) return ownerState.direction[0];
-        if (typeof ownerState.direction === 'object')
-          return ownerState.direction.xs;
-        return undefined;
+        return getValueByBreakpoint(ownerState.direction, 'xs');
       },
       '--_flex-gap-xs': ({ ownerState }: any) => {
-        let propValue = null;
-
-        if (Array.isArray(ownerState.spacing)) {
-          propValue = ownerState.spacing[0];
+        if (!ownerState.useFlexGap) {
+          return undefined;
         }
-        if (typeof ownerState.spacing === 'object') {
-          propValue = ownerState.spacing.xs;
-        }
+        let propValue = getValueByBreakpoint(ownerState.spacing, 'xs');
         if (typeof propValue === 'number' || typeof propValue === 'string') {
           return getSpacingValue(propValue, theme);
         }
@@ -97,27 +113,13 @@ const StackRoot = styled('div')(({ theme }: any) => {
     },
     [theme.breakpoints.up('sm')]: {
       '--_flex-direction-sm': ({ ownerState }: any) => {
-        if (
-          Array.isArray(ownerState.direction) &&
-          ownerState.direction.length > 1
-        )
-          return ownerState.direction[1];
-        if (typeof ownerState.direction === 'object')
-          return ownerState.direction.sm;
-        return undefined;
+        return getValueByBreakpoint(ownerState.direction, 'sm');
       },
       '--_flex-gap-sm': ({ ownerState }: any) => {
-        let propValue = null;
-
-        if (
-          Array.isArray(ownerState.spacing) &&
-          ownerState.spacing.length > 1
-        ) {
-          propValue = ownerState.spacing[1];
+        if (!ownerState.useFlexGap) {
+          return undefined;
         }
-        if (typeof ownerState.spacing === 'object') {
-          propValue = ownerState.spacing.sm;
-        }
+        let propValue = getValueByBreakpoint(ownerState.spacing, 'sm');
 
         if (typeof propValue === 'number' || typeof propValue === 'string') {
           return getSpacingValue(propValue, theme);
@@ -127,27 +129,13 @@ const StackRoot = styled('div')(({ theme }: any) => {
     },
     [theme.breakpoints.up('md')]: {
       '--_flex-direction-md': ({ ownerState }: any) => {
-        if (
-          Array.isArray(ownerState.direction) &&
-          ownerState.direction.length > 2
-        )
-          return ownerState.direction[2];
-        if (typeof ownerState.direction === 'object')
-          return ownerState.direction.md;
-        return undefined;
+        return getValueByBreakpoint(ownerState.direction, 'md');
       },
       '--_flex-gap-md': ({ ownerState }: any) => {
-        let propValue = null;
-
-        if (
-          Array.isArray(ownerState.spacing) &&
-          ownerState.spacing.length > 2
-        ) {
-          propValue = ownerState.spacing[2];
+        if (!ownerState.useFlexGap) {
+          return undefined;
         }
-        if (typeof ownerState.spacing === 'object') {
-          propValue = ownerState.spacing.md;
-        }
+        let propValue = getValueByBreakpoint(ownerState.spacing, 'md');
 
         if (typeof propValue === 'number' || typeof propValue === 'string') {
           return getSpacingValue(propValue, theme);
@@ -157,27 +145,13 @@ const StackRoot = styled('div')(({ theme }: any) => {
     },
     [theme.breakpoints.up('lg')]: {
       '--_flex-direction-lg': ({ ownerState }: any) => {
-        if (
-          Array.isArray(ownerState.direction) &&
-          ownerState.direction.length > 3
-        )
-          return ownerState.direction[3];
-        if (typeof ownerState.direction === 'object')
-          return ownerState.direction.lg;
-        return undefined;
+        return getValueByBreakpoint(ownerState.direction, 'lg');
       },
       '--_flex-gap-lg': ({ ownerState }: any) => {
-        let propValue = null;
-
-        if (
-          Array.isArray(ownerState.spacing) &&
-          ownerState.spacing.length > 3
-        ) {
-          propValue = ownerState.spacing[3];
+        if (!ownerState.useFlexGap) {
+          return undefined;
         }
-        if (typeof ownerState.spacing === 'object') {
-          propValue = ownerState.spacing.lg;
-        }
+        let propValue = getValueByBreakpoint(ownerState.spacing, 'lg');
 
         if (typeof propValue === 'number' || typeof propValue === 'string') {
           return getSpacingValue(propValue, theme);
@@ -187,27 +161,13 @@ const StackRoot = styled('div')(({ theme }: any) => {
     },
     [theme.breakpoints.up('xl')]: {
       '--_flex-direction-xl': ({ ownerState }: any) => {
-        if (
-          Array.isArray(ownerState.direction) &&
-          ownerState.direction.length > 4
-        )
-          return ownerState.direction[4];
-        if (typeof ownerState.direction === 'object')
-          return ownerState.direction.xl;
-        return undefined;
+        return getValueByBreakpoint(ownerState.direction, 'xl');
       },
       '--_flex-gap-xl': ({ ownerState }: any) => {
-        let propValue = null;
-
-        if (
-          Array.isArray(ownerState.spacing) &&
-          ownerState.spacing.length > 4
-        ) {
-          propValue = ownerState.spacing[4];
+        if (!ownerState.useFlexGap) {
+          return undefined;
         }
-        if (typeof ownerState.spacing === 'object') {
-          propValue = ownerState.spacing.xl;
-        }
+        let propValue = getValueByBreakpoint(ownerState.spacing, 'xl');
 
         if (typeof propValue === 'number' || typeof propValue === 'string') {
           return getSpacingValue(propValue, theme);
@@ -219,16 +179,522 @@ const StackRoot = styled('div')(({ theme }: any) => {
       'var(--_flex-direction-xl, var(--_flex-direction-lg, var(--_flex-direction-md, var(--_flex-direction-sm, var(--_flex-direction-xs, var(--_flex-direction))))))',
     gap: 'var(--_flex-gap-xl, var(--_flex-gap-lg, var(--_flex-gap-md, var(--_flex-gap-sm, var(--_flex-gap-xs, var(--_flex-gap))))))',
 
-    // TODO: handle props.spacing whe useFlexGap is false
-    // '& > :not(style):not(style)': {
-    //   margin: 0,
-    // },
+    variants: [
+      {
+        props: (props: any) => props.useFlexGap === false,
+        style: {
+          '& > :not(style):not(style)': {
+            margin: 0,
+          },
 
-    // '--_child-margin-left': ({ ownerState }: any) => {
-    //   if (typeof ownerState.direction === 'string' && ownerState.direction === 'row' && typeof ownerState.spacing === 'number') return ownerState.spacing;
-    //   // default value
-    //   return 'column';
-    // },
+          '--_child-margin-left': ({ ownerState }: any) => {
+            const propValue = ownerState.spacing;
+
+            if (
+              typeof ownerState.direction === 'string' &&
+              ownerState.direction === 'row' &&
+              isPrimitiveValue(ownerState.spacing)
+            ) {
+              return getSpacingValue(propValue, theme);
+            }
+          },
+          '--_child-margin-right': ({ ownerState }: any) => {
+            const propValue = ownerState.spacing;
+
+            if (
+              typeof ownerState.direction === 'string' &&
+              ownerState.direction === 'row-reverse' &&
+              isPrimitiveValue(ownerState.spacing)
+            ) {
+              return getSpacingValue(propValue, theme);
+            }
+          },
+
+          '--_child-margin-top': ({ ownerState }: any) => {
+            const propValue = ownerState.spacing;
+
+            if (
+              typeof ownerState.direction === 'string' &&
+              ownerState.direction === 'column' &&
+              isPrimitiveValue(ownerState.spacing)
+            ) {
+              return getSpacingValue(propValue, theme);
+            }
+          },
+
+          '--_child-margin-bottom': ({ ownerState }: any) => {
+            const propValue = ownerState.spacing;
+
+            if (
+              typeof ownerState.direction === 'string' &&
+              ownerState.direction === 'column-reverse' &&
+              isPrimitiveValue(ownerState.spacing)
+            ) {
+              return getSpacingValue(propValue, theme);
+            }
+          },
+
+          [theme.breakpoints.up('xs')]: {
+            '--_child-margin-left-xs': ({ ownerState }: any) => {
+              let propValue = getValueByBreakpoint(ownerState.spacing, 'xs');
+              let directionValue = getValueByBreakpoint(
+                ownerState.direction,
+                'xs',
+                true,
+              );
+
+              if (
+                (typeof propValue === 'number' ||
+                  typeof propValue === 'string') &&
+                directionValue === 'row'
+              ) {
+                return getSpacingValue(propValue, theme);
+              }
+
+              // reset the value
+              if (directionValue !== 'row') {
+                return 0;
+              }
+              return undefined;
+            },
+            '--_child-margin-right-xs': ({ ownerState }: any) => {
+              let propValue = getValueByBreakpoint(ownerState.spacing, 'xs');
+              let directionValue = getValueByBreakpoint(
+                ownerState.direction,
+                'xs',
+                true,
+              );
+
+              if (
+                (typeof propValue === 'number' ||
+                  typeof propValue === 'string') &&
+                directionValue === 'row-reverse'
+              ) {
+                return getSpacingValue(propValue, theme);
+              }
+
+              // reset the value
+              if (directionValue !== 'row-reverse') {
+                return 0;
+              }
+              return undefined;
+            },
+            '--_child-margin-top-xs': ({ ownerState }: any) => {
+              let propValue = getValueByBreakpoint(ownerState.spacing, 'xs');
+              let directionValue = getValueByBreakpoint(
+                ownerState.direction,
+                'xs',
+                true,
+              );
+
+              if (
+                (typeof propValue === 'number' ||
+                  typeof propValue === 'string') &&
+                directionValue === 'column'
+              ) {
+                return getSpacingValue(propValue, theme);
+              }
+
+              // reset the value
+              if (directionValue !== 'column') {
+                return 0;
+              }
+              return undefined;
+            },
+            '--_child-margin-bottom-xs': ({ ownerState }: any) => {
+              let propValue = getValueByBreakpoint(ownerState.spacing, 'xs');
+              let directionValue = getValueByBreakpoint(
+                ownerState.direction,
+                'xs',
+                true,
+              );
+
+              if (
+                (typeof propValue === 'number' ||
+                  typeof propValue === 'string') &&
+                directionValue === 'column-reverse'
+              ) {
+                return getSpacingValue(propValue, theme);
+              }
+
+              // reset the value
+              if (directionValue !== 'column-reverse') {
+                return 0;
+              }
+              return undefined;
+            },
+          },
+          [theme.breakpoints.up('sm')]: {
+            '--_child-margin-left-sm': ({ ownerState }: any) => {
+              let propValue = getValueByBreakpoint(ownerState.spacing, 'sm');
+              let directionValue = getValueByBreakpoint(
+                ownerState.direction,
+                'sm',
+                true,
+              );
+
+              if (
+                (typeof propValue === 'number' ||
+                  typeof propValue === 'string') &&
+                directionValue === 'row'
+              ) {
+                return getSpacingValue(propValue, theme);
+              }
+
+              // reset the value
+              if (directionValue !== 'row') {
+                return 0;
+              }
+              return undefined;
+            },
+            '--_child-margin-right-sm': ({ ownerState }: any) => {
+              let propValue = getValueByBreakpoint(ownerState.spacing, 'sm');
+              let directionValue = getValueByBreakpoint(
+                ownerState.direction,
+                'sm',
+                true,
+              );
+
+              if (
+                (typeof propValue === 'number' ||
+                  typeof propValue === 'string') &&
+                directionValue === 'row-reverse'
+              ) {
+                return getSpacingValue(propValue, theme);
+              }
+
+              // reset the value
+              if (directionValue !== 'row-reverse') {
+                return 0;
+              }
+              return undefined;
+            },
+            '--_child-margin-top-sm': ({ ownerState }: any) => {
+              let propValue = getValueByBreakpoint(ownerState.spacing, 'sm');
+              let directionValue = getValueByBreakpoint(
+                ownerState.direction,
+                'sm',
+                true,
+              );
+
+              if (
+                (typeof propValue === 'number' ||
+                  typeof propValue === 'string') &&
+                directionValue === 'column'
+              ) {
+                return getSpacingValue(propValue, theme);
+              }
+
+              // reset the value
+              if (directionValue !== 'column') {
+                return 0;
+              }
+              return undefined;
+            },
+            '--_child-margin-bottom-sm': ({ ownerState }: any) => {
+              let propValue = getValueByBreakpoint(ownerState.spacing, 'sm');
+              let directionValue = getValueByBreakpoint(
+                ownerState.direction,
+                'sm',
+                true,
+              );
+
+              if (
+                (typeof propValue === 'number' ||
+                  typeof propValue === 'string') &&
+                directionValue === 'column-reverse'
+              ) {
+                return getSpacingValue(propValue, theme);
+              }
+
+              // reset the value
+              if (directionValue !== 'column-reverse') {
+                return 0;
+              }
+              return undefined;
+            },
+          },
+          [theme.breakpoints.up('md')]: {
+            '--_child-margin-left-md': ({ ownerState }: any) => {
+              let propValue = getValueByBreakpoint(ownerState.spacing, 'md');
+              let directionValue = getValueByBreakpoint(
+                ownerState.direction,
+                'md',
+                true,
+              );
+
+              if (
+                (typeof propValue === 'number' ||
+                  typeof propValue === 'string') &&
+                directionValue === 'row'
+              ) {
+                return getSpacingValue(propValue, theme);
+              }
+              // reset the value
+              if (directionValue !== 'row') {
+                return 0;
+              }
+              return undefined;
+            },
+            '--_child-margin-right-md': ({ ownerState }: any) => {
+              let propValue = getValueByBreakpoint(ownerState.spacing, 'md');
+              let directionValue = getValueByBreakpoint(
+                ownerState.direction,
+                'md',
+                true,
+              );
+
+              if (
+                (typeof propValue === 'number' ||
+                  typeof propValue === 'string') &&
+                directionValue === 'row-reverse'
+              ) {
+                return getSpacingValue(propValue, theme);
+              }
+
+              // reset the value
+              if (directionValue !== 'row-reverse') {
+                return 0;
+              }
+              return undefined;
+            },
+            '--_child-margin-top-md': ({ ownerState }: any) => {
+              let propValue = getValueByBreakpoint(ownerState.spacing, 'md');
+              let directionValue = getValueByBreakpoint(
+                ownerState.direction,
+                'md',
+                true,
+              );
+
+              if (
+                (typeof propValue === 'number' ||
+                  typeof propValue === 'string') &&
+                directionValue === 'column'
+              ) {
+                return getSpacingValue(propValue, theme);
+              }
+
+              // reset the value
+              if (directionValue !== 'column') {
+                return 0;
+              }
+              return undefined;
+            },
+            '--_child-margin-bottom-md': ({ ownerState }: any) => {
+              let propValue = getValueByBreakpoint(ownerState.spacing, 'md');
+              let directionValue = getValueByBreakpoint(
+                ownerState.direction,
+                'md',
+                true,
+              );
+
+              if (
+                (typeof propValue === 'number' ||
+                  typeof propValue === 'string') &&
+                directionValue === 'column-reverse'
+              ) {
+                return getSpacingValue(propValue, theme);
+              }
+
+              // reset the value
+              if (directionValue !== 'column-reverse') {
+                return 0;
+              }
+              return undefined;
+            },
+          },
+          [theme.breakpoints.up('lg')]: {
+            '--_child-margin-left-lg': ({ ownerState }: any) => {
+              let propValue = getValueByBreakpoint(ownerState.spacing, 'lg');
+              let directionValue = getValueByBreakpoint(
+                ownerState.direction,
+                'lg',
+                true,
+              );
+
+              if (
+                (typeof propValue === 'number' ||
+                  typeof propValue === 'string') &&
+                directionValue === 'row'
+              ) {
+                return getSpacingValue(propValue, theme);
+              }
+              // reset the value
+              if (directionValue !== 'row') {
+                return 0;
+              }
+              return undefined;
+            },
+            '--_child-margin-right-lg': ({ ownerState }: any) => {
+              let propValue = getValueByBreakpoint(ownerState.spacing, 'lg');
+              let directionValue = getValueByBreakpoint(
+                ownerState.direction,
+                'lg',
+                true,
+              );
+
+              if (
+                (typeof propValue === 'number' ||
+                  typeof propValue === 'string') &&
+                directionValue === 'row-reverse'
+              ) {
+                return getSpacingValue(propValue, theme);
+              }
+
+              // reset the value
+              if (directionValue !== 'row-reverse') {
+                return 0;
+              }
+              return undefined;
+            },
+            '--_child-margin-top-lg': ({ ownerState }: any) => {
+              let propValue = getValueByBreakpoint(ownerState.spacing, 'lg');
+              let directionValue = getValueByBreakpoint(
+                ownerState.direction,
+                'lg',
+                true,
+              );
+
+              if (
+                (typeof propValue === 'number' ||
+                  typeof propValue === 'string') &&
+                directionValue === 'column'
+              ) {
+                return getSpacingValue(propValue, theme);
+              }
+
+              // reset the value
+              if (directionValue !== 'column') {
+                return 0;
+              }
+              return undefined;
+            },
+            '--_child-margin-bottom-lg': ({ ownerState }: any) => {
+              let propValue = getValueByBreakpoint(ownerState.spacing, 'lg');
+              let directionValue = getValueByBreakpoint(
+                ownerState.direction,
+                'lg',
+                true,
+              );
+
+              if (
+                (typeof propValue === 'number' ||
+                  typeof propValue === 'string') &&
+                directionValue === 'column-reverse'
+              ) {
+                return getSpacingValue(propValue, theme);
+              }
+
+              // reset the value
+              if (directionValue !== 'column-reverse') {
+                return 0;
+              }
+              return undefined;
+            },
+          },
+          [theme.breakpoints.up('xl')]: {
+            '--_child-margin-left-xl': ({ ownerState }: any) => {
+              let propValue = getValueByBreakpoint(ownerState.spacing, 'xl');
+              let directionValue = getValueByBreakpoint(
+                ownerState.direction,
+                'xl',
+                true,
+              );
+
+              if (
+                (typeof propValue === 'number' ||
+                  typeof propValue === 'string') &&
+                directionValue === 'row'
+              ) {
+                return getSpacingValue(propValue, theme);
+              }
+              // reset the value
+              if (directionValue !== 'row') {
+                return 0;
+              }
+              return undefined;
+            },
+            '--_child-margin-right-xl': ({ ownerState }: any) => {
+              let propValue = getValueByBreakpoint(ownerState.spacing, 'xl');
+              let directionValue = getValueByBreakpoint(
+                ownerState.direction,
+                'xl',
+                true,
+              );
+
+              if (
+                (typeof propValue === 'number' ||
+                  typeof propValue === 'string') &&
+                directionValue === 'row-reverse'
+              ) {
+                return getSpacingValue(propValue, theme);
+              }
+
+              // reset the value
+              if (directionValue !== 'row-reverse') {
+                return 0;
+              }
+              return undefined;
+            },
+            '--_child-margin-top-xl': ({ ownerState }: any) => {
+              let propValue = getValueByBreakpoint(ownerState.spacing, 'xl');
+              let directionValue = getValueByBreakpoint(
+                ownerState.direction,
+                'xl',
+                true,
+              );
+
+              if (
+                (typeof propValue === 'number' ||
+                  typeof propValue === 'string') &&
+                directionValue === 'column'
+              ) {
+                return getSpacingValue(propValue, theme);
+              }
+
+              // reset the value
+              if (directionValue !== 'column') {
+                return 0;
+              }
+              return undefined;
+            },
+            '--_child-margin-bottom-xl': ({ ownerState }: any) => {
+              let propValue = getValueByBreakpoint(ownerState.spacing, 'xl');
+              let directionValue = getValueByBreakpoint(
+                ownerState.direction,
+                'xl',
+                true,
+              );
+
+              if (
+                (typeof propValue === 'number' ||
+                  typeof propValue === 'string') &&
+                directionValue === 'column-reverse'
+              ) {
+                return getSpacingValue(propValue, theme);
+              }
+
+              // reset the value
+              if (directionValue !== 'column-reverse') {
+                return 0;
+              }
+              return undefined;
+            },
+          },
+
+          '& > :not(style) ~ :not(style)': {
+            marginLeft:
+              'var(--_child-margin-left-xl, var(--_child-margin-left-lg, var(--_child-margin-left-md, var(--_child-margin-left-sm, var(--_child-margin-left-xs, var(--_child-margin-left))))))',
+            marginRight:
+              'var(--_child-margin-right-xl, var(--_child-margin-right-lg, var(--_child-margin-right-md, var(--_child-margin-right-sm, var(--_child-margin-right-xs, var(--_child-margin-right))))))',
+            marginTop:
+              'var(--_child-margin-top-xl, var(--_child-margin-top-lg, var(--_child-margin-top-md, var(--_child-margin-top-sm, var(--_child-margin-top-xs, var(--_child-margin-top))))))',
+            marginBottom:
+              'var(--_child-margin-bottom-xl, var(--_child-margin-bottom-lg, var(--_child-margin-bottom-md, var(--_child-margin-bottom-sm, var(--_child-margin-bottom-xs, var(--_child-margin-bottom))))))',
+          },
+        },
+      },
+    ],
 
     // plus handle all breakpoints and combination with direction :mind-explode: :D
   } as any;
@@ -245,8 +711,7 @@ const Stack = React.forwardRef(function Stack(inProps: any, ref) {
     divider,
     children,
     className,
-    // TODO: Change this to false by default
-    useFlexGap = true,
+    useFlexGap = false,
     ...other
   } = props;
   const ownerState = {
