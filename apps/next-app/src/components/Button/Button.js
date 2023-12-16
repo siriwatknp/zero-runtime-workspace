@@ -330,52 +330,6 @@ const ButtonStartIcon = styled('span', {
   ],
 }));
 
-const DividerRoot = styled('div', {
-  shouldForwardProp: (prop) => rootShouldForwardProp(prop),
-  name: 'MuiDivider',
-  slot: 'Root',
-  overridesResolver: (props, styles) => {
-    const { ownerState } = props;
-
-    return [
-      styles.root,
-      ownerState.absolute && styles.absolute,
-      styles[ownerState.variant],
-      ownerState.light && styles.light,
-      ownerState.orientation === 'vertical' && styles.vertical,
-      ownerState.flexItem && styles.flexItem,
-      ownerState.children && styles.withChildren,
-      ownerState.children &&
-        ownerState.orientation === 'vertical' &&
-        styles.withChildrenVertical,
-      ownerState.textAlign === 'right' &&
-        ownerState.orientation !== 'vertical' &&
-        styles.textAlignRight,
-      ownerState.textAlign === 'left' &&
-        ownerState.orientation !== 'vertical' &&
-        styles.textAlignLeft,
-    ];
-  },
-})(({ theme }) => ({
-  margin: 0, // Reset browser default style.
-  flexShrink: 0,
-  borderWidth: 0,
-  borderStyle: 'solid',
-  // borderColor: (theme.vars || theme).palette.divider,
-  borderBottomWidth: 'thin',
-  variants: [
-    {
-      props: (ownerState) => ownerState.absolute,
-      style: {
-        position: 'absolute',
-        bottom: 0,
-        left: 0,
-        width: '100%',
-      },
-    },
-  ],
-}));
-
 const ButtonEndIcon = styled('span', {
   name: 'MuiButton',
   slot: 'EndIcon',
@@ -427,39 +381,82 @@ const ButtonEndIcon = styled('span', {
  * @type React.FC<any>
  */
 const Button = React.forwardRef(function Button(inProps, ref) {
-  const props = useThemeProps({ props: inProps, name: 'MuiDivider' });
+  // props priority: `inProps` > `contextProps` > `themeDefaultProps`
+  const contextProps = React.useContext(ButtonGroupContext);
+  const buttonGroupButtonContextPositionClassName = React.useContext(
+    ButtonGroupButtonContext,
+  );
+  const resolvedProps = resolveProps(contextProps, inProps);
+  const props = useThemeProps({ props: resolvedProps, name: 'MuiButton' });
   const {
-    absolute = false,
     children,
+    color = 'primary',
+    component = 'button',
     className,
-    component = children ? 'div' : 'hr',
-    flexItem = false,
-    light = false,
-    orientation = 'horizontal',
-    role = component !== 'hr' ? 'separator' : undefined,
-    textAlign = 'center',
-    variant = 'fullWidth',
+    disabled = false,
+    disableElevation = false,
+    disableFocusRipple = false,
+    endIcon: endIconProp,
+    focusVisibleClassName,
+    fullWidth = false,
+    size = 'medium',
+    startIcon: startIconProp,
+    type,
+    variant = 'text',
     ...other
   } = props;
 
   const ownerState = {
     ...props,
-    absolute,
+    color,
     component,
-    flexItem,
-    light,
-    orientation,
-    role,
-    textAlign,
+    disabled,
+    disableElevation,
+    disableFocusRipple,
+    fullWidth,
+    size,
+    type,
     variant,
   };
 
   const classes = useUtilityClasses(ownerState);
 
+  const startIcon = startIconProp && (
+    <ButtonStartIcon className={classes.startIcon} ownerState={ownerState}>
+      {startIconProp}
+    </ButtonStartIcon>
+  );
+
+  const endIcon = endIconProp && (
+    <ButtonEndIcon className={classes.endIcon} ownerState={ownerState}>
+      {endIconProp}
+    </ButtonEndIcon>
+  );
+
+  const positionClassName = buttonGroupButtonContextPositionClassName || '';
+
   return (
-    <>
-      <DividerRoot />
-    </>
+    <ButtonRoot
+      ownerState={ownerState}
+      className={clsx(
+        contextProps.className,
+        classes.root,
+        className,
+        positionClassName,
+      )}
+      component={component}
+      disabled={disabled}
+      focusRipple={!disableFocusRipple}
+      focusVisibleClassName={clsx(classes.focusVisible, focusVisibleClassName)}
+      ref={ref}
+      type={type}
+      {...other}
+      classes={classes}
+    >
+      {startIcon}
+      {children}
+      {endIcon}
+    </ButtonRoot>
   );
 });
 
