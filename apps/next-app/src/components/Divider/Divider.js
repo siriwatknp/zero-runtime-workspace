@@ -225,7 +225,7 @@ const DividerWrapper = styled('span', {
 /**
  * @type React.FC<any>
  */
-const Button = React.forwardRef(function Button(inProps, ref) {
+const Divider = React.forwardRef(function Divider(inProps, ref) {
   const props = useThemeProps({ props: inProps, name: 'MuiDivider' });
   const {
     absolute = false,
@@ -275,4 +275,4 @@ const Button = React.forwardRef(function Button(inProps, ref) {
   );
 });
 
-export default Button;
+export default Divider;
