@@ -9,9 +9,7 @@ import useThemeProps from '@mui/material/styles/useThemeProps';
 import { getDividerUtilityClass } from './dividerClasses';
 
 export const rootShouldForwardProp = (prop) =>
-  shouldForwardProp(prop) &&
-  prop !== 'classes' &&
-  prop !== 'focusVisibleClassName';
+  shouldForwardProp(prop) && prop !== 'classes';
 
 const useUtilityClasses = (ownerState) => {
   const {
